@@ -10,7 +10,7 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="12" sm="10" md="8" v-if="startDate && finalDate">
+        <v-col cols="12" sm="10" md="8" v-if="minDate && maxDate">
           <v-card class="px-4 pt-4">
             <p class="ml-3">
               Rango de tiempo: Puede seleccionar un rango de tiempo de máximo un
@@ -18,45 +18,26 @@
             </p>
             <v-row>
               <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <!-- <DatePicker
-                  text="Selecciona fecha inicio"
-                  @getDate="getstartDate" v-model="startDate"
-                  :initialDate="`${startDate.year}-${startDate.month}`"
-                ></DatePicker> -->
                 <DatePicker
-                  text="Selecciona fecha inicio"
+                  label="Selecciona fecha inicio"
                   :getDate="getStartDate"
-                  :initialDate="startDate"
+                  :minDate="minDate"
+                  :maxDate="maxDate"
                 ></DatePicker>
               </v-col>
               <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <!-- <DatePicker
-                  text="Selecciona fecha final"
-                  @getDate="getFinalDate" v-model="finalDate"
-                  :initialDate="`${finalDate.year}-${finalDate.month}`"
-                ></DatePicker> -->
                 <DatePicker
-                  text="Selecciona fecha final"
+                  label="Selecciona fecha final"
                   :getDate="getFinalDate"
-                  :initialDate="finalDate"
+                  :minDate="minDate"
+                  :maxDate="maxDate"
                 ></DatePicker>
-              </v-col>
-              <v-col v-if="alert" cols="12" class="mb-2" id="date-picker-alert">
-                <v-alert
-                  :type="
-                    validateDate(startDate) && validateDate(finalDate)
-                      ? 'success'
-                      : 'error'
-                  "
-                  >La fecha fue escogida con exito</v-alert
-                >
               </v-col>
               <v-col cols="12" align="right">
                 <v-btn
                   class="mb-2 mr-3"
                   color="usa-blue"
                   @click="alert = true"
-                  
                   elevation="0"
                   dark
                   >Consultar</v-btn
@@ -112,18 +93,17 @@ import DatePicker from "../components/DatePickerComponent.vue";
 import axios from "axios";
 import { Global } from "../Global";
 
-var datesAvailable = null;
-
 export default {
   data() {
     return {
       url: Global.url,
+      token: this.$cookies.get("sesion"),
       xAxis: [],
       yAxis: [],
-      token: this.$cookies.get("sesion"),
-
       startDate: null,
       finalDate: null,
+      minDate: null,
+      maxDate: null,
       alert: false,
     };
   },
@@ -138,35 +118,13 @@ export default {
   methods: {
     getStartDate(date) {
       this.startDate = date;
-      // this.startDate.year = date.split("-")[0];
-      // this.startDate.month = date.split("-")[1];
       console.log("Inicio");
       console.log(this.startDate);
     },
     getFinalDate(date) {
       this.finalDate = date;
-      // this.finalDate.year = date.split("-")[0];
-      // this.finalDate.month = date.split("-")[1];
       console.log("Final");
       console.log(this.finalDate);
-    },
-    validateDate(date) {
-      console.log("Validation");
-      let dateValid = false;
-      datesAvailable.forEach((item) => {
-        console.log(item);
-        console.log(date);
-        if (item.year == date.split("-")[0]) {
-          if (parseInt(item.month) == parseInt(date.split("-")[1])) {
-            console.log("Pase");
-            dateValid |= true;
-          }
-        } else {
-          dateValid |= false;
-        }
-      });
-      // console.log(dateValid);
-      return dateValid;
     },
     // Se necesita tener una sola vez
     getAxes() {
@@ -194,18 +152,19 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.status == 200) {
-            datesAvailable = res.data;
-            // console.log("datesAvailable");
-            // console.log(this.datesAvailable);
-            // this.startDate = res.data[0];
-            this.startDate = `${res.data[0].year}-${res.data[0].month}`;
-            // console.log("Set: "+ this.startDate.year);
-            // this.finalDate = res.data[0];
-            this.finalDate = `${res.data[0].year}-${res.data[0].month}`;
-            // console.log("Set: "+ this.finalDate.year);
+            let datesAvailable = res.data.map(
+              (date) => new Date(`${date.year}/${date.month}`)
+            );
+            this.maxDate = new Date(Math.max.apply(null, datesAvailable))
+              .toISOString()
+              .substr(0, 7);
+            this.minDate = new Date(Math.min.apply(null, datesAvailable))
+              .toISOString()
+              .substr(0, 7);
           }
         });
     },
+    getDateInterval() {},
   },
 };
 </script>
@@ -222,7 +181,7 @@ export default {
   /* align-items: initial; */
 
   /* ESTILOS DEL FONDO */
-  background: linear-gradient(to bottom right, #00457d40  , #00447d40),
+  background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
   /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); */
@@ -235,9 +194,9 @@ export default {
   height: 300px;
   background: linear-gradient(rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.2)),
     url("../assets/img/background.jpg");
-  background-size: cover;
+  background-size: 100%;
   background-attachment: fixed;
-  /* background-position: 0px -200px; */
+  background-position: 0px -350px;
   /* filter: blur(2px); */
 }
 
