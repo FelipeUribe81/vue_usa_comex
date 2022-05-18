@@ -2,131 +2,254 @@
   <v-container id="statistics-container" class="px-16" fluid fill-height>
     <div style="width: 100%">
       <v-row justify="center">
-        <v-col cols="12" sm="10" md="8">
-          <v-card>
-            <v-img id="statistics-banner"> </v-img>
-            <v-card-title> Bienvenido a UsaComex </v-card-title>
+        <v-col cols="4">
+          <v-card class="rounded-b-0">
+            <v-toolbar flat color="usa-blue" dense>
+              <v-toolbar-title class="text-h6 white--text pl-0">
+                Filtrar
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn text dark icon to="/choose-date">
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
+            </v-toolbar>
           </v-card>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="12" sm="10" md="8" v-if="minDate && maxDate">
-          <v-card class="px-4 pt-4">
-            <p class="ml-3">
-              Rango de tiempo: Puede seleccionar un rango de tiempo de máximo un
-              año para su consulta.
-            </p>
-            <v-row>
-              <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <DatePicker
-                  label="Selecciona fecha inicio"
-                  :getDate="getStartDate"
-                  :minDate="minDate"
-                  :maxDate="maxDate"
-                ></DatePicker>
-              </v-col>
-              <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <DatePicker
-                  label="Selecciona fecha final"
-                  :getDate="getFinalDate"
-                  :minDate="minDate"
-                  :maxDate="maxDate"
-                ></DatePicker>
-              </v-col>
-              <v-col cols="12" align="right">
-                <v-btn
-                  class="mb-2 mr-3"
-                  color="usa-blue"
-                  @click="alert = true"
-                  elevation="0"
-                  dark
-                  >Consultar</v-btn
-                >
-              </v-col>
+          <v-card class="py-8 px-5 mb-4 rounded-t-0">
+            <!-- <h1 class="pl-3">Filtrar</h1> -->
+            <ComboBox
+              :options01="xAxis"
+              :options02="yAxis"
+              text="Filtrar por:"
+              :axis="getCurrentAxes"
+            >
+            </ComboBox>
+          </v-card>
+          <v-card class="rounded-b-0">
+            <v-toolbar flat color="usa-blue" dense>
+              <v-toolbar-title class="text-h6 white--text pl-0">
+                Opciones
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn
+                text
+                dark
+                @click="
+                  () => {
+                    eChart = true;
+                    if (typeGraph[0] != 'e') {
+                      typeGraph = `e${typeGraph}`;
+                    }
+                  }
+                "
+              >
+                OP1
+                <v-icon>mdi-chart-scatter-plot</v-icon>
+              </v-btn>
+              <v-btn
+                text
+                dark
+                @click="
+                  () => {
+                    eChart = false;
+                    if (typeGraph[0] == 'e') {
+                      typeGraph = typeGraph.substr(1);
+                    }
+                  }
+                "
+              >
+                OP2
+                <v-icon>mdi-chart-scatter-plot</v-icon>
+              </v-btn>
+            </v-toolbar>
+          </v-card>
+
+          <v-card class="py-8 px-5 rounded-t-0">
+            <!-- TIPO -->
+            <!-- <v-row>
+              <v-btn outlined> Change grapht </v-btn>
+            </v-row> -->
+            <v-row justify="center">
+              <v-btn
+                class="mx-2"
+                icon
+                x-large
+                color="green"
+                @click="typeGraph = eChart ? 'epie' : 'pie'"
+              >
+                <v-icon dark> mdi-chart-pie </v-icon>
+              </v-btn>
+              <v-btn
+                class="mx-2"
+                icon
+                x-large
+                color="orange"
+                @click="typeGraph = eChart ? 'ebar' : 'bar'"
+              >
+                <v-icon dark> mdi-chart-bar </v-icon>
+              </v-btn>
+              <v-btn
+                class="mx-2"
+                icon
+                x-large
+                color="red"
+                @click="typeGraph = eChart ? 'edonut' : 'donut'"
+              >
+                <v-icon dark> mdi-chart-donut </v-icon>
+              </v-btn>
+              <v-btn
+                class="mx-2"
+                icon
+                x-large
+                color="blue"
+                @click="typeGraph = eChart ? 'eline' : 'line'"
+              >
+                <v-icon dark> mdi-chart-line </v-icon>
+              </v-btn>
             </v-row>
           </v-card>
         </v-col>
-        <v-col v-else cols="12" sm="10" md="8" align="center">
-          <v-card class="px-4 pa-4">
+        <v-col cols="8">
+          <v-card class="rounded-b-0">
+            <v-toolbar flat color="usa-blue" dense>
+              <v-toolbar-title class="text-h6 white--text pl-0">
+                Graficos
+              </v-toolbar-title>
+            </v-toolbar>
+          </v-card>
+          <v-card class="py-8 px-5 rounded-t-0">
+            <Graph
+              :typeGraph="typeGraph"
+              :chartData="chartData"
+              v-if="chartData && !chartLoading"
+            ></Graph>
+            <!-- <v-img
+              lazy-src="../assets/img/pie-simple.svg"
+              v-if="chartAltImage"
+              height="400px"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                    v-if="chartLoading"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img> -->
+            <!-- <v-container> -->
+            <!-- <v-img
+                class="mb-2"
+                lazy-src="../assets/img/pie-simple.svg"
+                v-if="chartAltImage"
+                height="400px"
+              ></v-img> -->
             <v-progress-linear
               indeterminate
               color="usa-blue"
+              v-if="chartLoading"
+              class="mt-10"
             ></v-progress-linear>
+            <!-- </v-container> -->
           </v-card>
         </v-col>
-        <!-- <v-col cols="6">
-          <v-card class="px-4 pt-4">
-            <p>
-              Rango de tiempo: Puede seleccionar un rango de tiempo de máximo un
-              año para su consulta.
-            </p>
-            <v-row>
-              <v-col cols="12" md="6">
-                <DatePicker text="Selecciona fecha inicio"></DatePicker>
-              </v-col>
-              <v-col cols="12" md="6">
-                <DatePicker text="Selecciona fecha inicio"></DatePicker>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col> -->
       </v-row>
       <v-row>
-        <!-- <ComboBox :options01="xAxis" :options02="yAxis" text="Filtrar por:">
-        </ComboBox> -->
+        <v-col cols="12">
+          <v-card class="rounded-b-0">
+            <v-toolbar flat color="usa-blue" dense>
+              <v-toolbar-title class="text-h6 white--text pl-0">
+                Tabla
+              </v-toolbar-title>
+            </v-toolbar>
+          </v-card>
+          <Table></Table>
+        </v-col>
       </v-row>
     </div>
-    <!-- <v-row>
-      <v-col cols="12" md="12" lg="7"
-        ><v-card class="pa-8">Graph</v-card></v-col
-      >
-      <v-col cols="12" md="12" lg="5"
-        ><v-card class="pa-8">Table</v-card></v-col
-      >
-    </v-row> -->
   </v-container>
 </template>
 
 <script>
-// import ComboBox from "../components/ComboBoxComponent.vue";
-import DatePicker from "../components/DatePickerComponent.vue";
+import ComboBox from "../components/ComboBoxComponent.vue";
+import Table from "../components/TableComponent.vue";
+// import DatePicker from "../components/DatePickerComponent.vue";
+import Graph from "../components/ChartComponent.vue";
 import axios from "axios";
-import { Global } from "../Global";
+import { Global } from "../Global.js";
 
 export default {
   data() {
     return {
       url: Global.url,
-      token: this.$cookies.get("sesion"),
       xAxis: [],
       yAxis: [],
-      startDate: null,
-      finalDate: null,
-      minDate: null,
-      maxDate: null,
-      alert: false,
+      token: this.$cookies.get("sesion"),
+      datesAvailable: null,
+      // minDate: null,
+      // maxDate: null,
+      // startDate: null,
+      // finalDate: null,
+      // alert: false,
+      typeGraph: "bar",
+      eChart: false,
+      dataParameters: null,
+      chartData: null,
+      chartLoading: false,
+      chartAltImage: true,
     };
   },
   components: {
-    // ComboBox,
-    DatePicker,
+    ComboBox,
+    Graph,
+    Table,
   },
   mounted() {
     this.getAxes();
-    this.getDatesAvailable();
+    // this.dataParameters = {
+    //   fecha_inicio: "2015-01",
+    //   fecha_fin: "2015-01",
+    //   eje_x: "Acuerdo de tratamiendo arancelario",
+    //   eje_y: "Arancel pagado",
+    // };
+    // this.getGraphData(this.dataParameters);
   },
   methods: {
-    getStartDate(date) {
-      this.startDate = date;
-      console.log("Inicio");
-      console.log(this.startDate);
+    initialChartData(axes) {
+      let dates = JSON.parse(localStorage.date);
+      if (axes["eje_x"] != null && axes["eje_y"] != null) {
+        this.dataParameters = {
+          fecha_inicio: dates["start"],
+          fecha_fin: dates["final"],
+          eje_x: axes["eje_x"],
+          eje_y: axes["eje_y"],
+        };
+        this.getGraphData(this.dataParameters);
+      }
     },
-    getFinalDate(date) {
-      this.finalDate = date;
-      console.log("Final");
-      console.log(this.finalDate);
+    getCurrentAxes(axes) {
+      this.initialChartData(axes);
     },
-    // Se necesita tener una sola vez
+    getGraphData(dataParameters) {
+      console.log(this.dataParameters);
+      this.chartLoading = true;
+      this.chartAltImage = true;
+      axios
+        .post(`${this.url}/importacion/data/`, dataParameters, {
+          headers: {
+            Authorization: `Token ${this.token}`,
+          },
+        })
+        .then((res) => {
+          console.log("Data");
+          console.log(res);
+          if (res.status == 200) {
+            this.chartAltImage = false;
+            this.chartLoading = false;
+            this.chartData = res.data;
+          }
+        });
+    },
     getAxes() {
       axios
         .get(`${this.url}/importacion/axes/`, {
@@ -135,57 +258,32 @@ export default {
           },
         })
         .then((res) => {
+          console.log("Axes");
           console.log(res);
           if (res.status == 200) {
             this.xAxis = res.data.eje_x;
             this.yAxis = res.data.eje_y;
           }
-        });
-    },
-    getDatesAvailable() {
-      axios
-        .get(`${this.url}/importacion/years/`, {
-          headers: {
-            Authorization: `Token ${this.token}`,
-          },
         })
-        .then((res) => {
-          console.log(res);
-          if (res.status == 200) {
-            let datesAvailable = res.data.map(
-              (date) => new Date(`${date.year}/${date.month}`)
-            );
-            this.maxDate = new Date(Math.max.apply(null, datesAvailable))
-              .toISOString()
-              .substr(0, 7);
-            this.minDate = new Date(Math.min.apply(null, datesAvailable))
-              .toISOString()
-              .substr(0, 7);
-          }
+        .catch((err) => {
+          console.log("ERROR");
+          console.log(Object.values(err));
+          console.log(Object.keys(err));
+          console.log(err.response.status);
+          console.log(err.response.statusText);
+          console.log(err.message);
         });
     },
-    getDateInterval() {},
+    // getDateInterval() {},
   },
 };
 </script>
 
 <style>
 #statistics-container {
-  /* background: linear-gradient(rgba(5, 7, 12, 0.54), rgba(5, 7, 12, 0.54)),
-    url(../assets/img/background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; */
-
-  /* align-items: initial; */
-
   /* ESTILOS DEL FONDO */
   background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
-  /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
-    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); */
-  /* display: block !important; */
 }
 
 /* ESTILOS DE LAS ESTADISTICAS */
@@ -194,10 +292,8 @@ export default {
   height: 300px;
   background: linear-gradient(rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.2)),
     url("../assets/img/background.jpg");
-  background-size: 100%;
+  background-size: cover;
   background-attachment: fixed;
-  background-position: 0px -350px;
-  /* filter: blur(2px); */
 }
 
 /* ESTILOS PARA EL DATE PICKER */
@@ -208,11 +304,4 @@ export default {
 #date-picker-alert {
   height: 80px;
 }
-
-/* .v-text-field--filled>.v-input__control>.v-input__slot, .v-text-field--full-width>.v-input__control>.v-input__slot, .v-text-field--outlined>.v-input__control>.v-input__slot {
-    height: 40px;
-} */
-/* .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
-  border-color: #0252ca !important;
-} */
 </style>

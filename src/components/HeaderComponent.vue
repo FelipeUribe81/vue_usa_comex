@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="usa-blue" v-if="!$route.meta.hideNavbar" app>
+  <v-app-bar class="usa-header" v-if="!$route.meta.hideNavbar" app>
     <v-img
       class="mx-2"
       src="../assets/img/usaLogo.png"
@@ -9,6 +9,9 @@
     ></v-img>
 
     <v-toolbar-title class="white--text"> UsaComex </v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn icon dark> <v-icon>
+      mdi-logout</v-icon></v-btn>
   </v-app-bar>
 </template>
 

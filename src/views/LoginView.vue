@@ -104,7 +104,7 @@ export default {
         .then((res) => {
           console.log(res);
           this.$cookies.set("sesion", res.data.token, res.data.expiry);
-          this.$router.push("/statistics");
+          this.$router.push("/choose-date");
         })
         .catch((error) => {
           console.log(error);

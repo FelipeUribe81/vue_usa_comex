@@ -57,6 +57,7 @@ export default {
     },
     setInitial() {
       this.date = this.minDate;
+      this.sendDate(this.date);
     },
   },
 };
