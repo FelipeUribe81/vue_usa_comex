@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     login() {
-      
+      var ctx = this;
       console.log("Hola");
       console.log(`${this.url}/users/login/`);
       axios

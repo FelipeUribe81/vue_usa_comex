@@ -153,21 +153,21 @@ export default {
 
 <style>
 #statistics-container {
-  /* background: linear-gradient(rgba(5, 7, 12, 0.54), rgba(5, 7, 12, 0.54)),
-    url(../assets/img/background.jpg);
+   background: linear-gradient(rgba(5, 7, 12, 0.2), rgba(5, 7, 12, 0.54)),
+    url(https://img.freepik.com/free-vector/financial-business-statistics-with-bar-graph-candlestick-chart-show-effective-earning-background_120819-1005.jpg?w=2000);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; */
+  background-attachment: fixed; }
 
   /* align-items: initial; */
 
   /* ESTILOS DEL FONDO */
-  background: linear-gradient(to bottom right, #00457d40, #00447d40),
-    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
-  /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
+  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); */
-  /* display: block !important; */
+  /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); } */
+  /* display: block !important;
 }
 
 /* ESTILOS DE LAS ESTADISTICAS */

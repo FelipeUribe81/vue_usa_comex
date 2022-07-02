@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #boxCard {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.4);

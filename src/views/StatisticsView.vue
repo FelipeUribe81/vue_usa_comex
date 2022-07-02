@@ -1,114 +1,9 @@
 <template>
   <v-container id="statistics-container" class="px-16" fluid fill-height>
+    {{ $vuetify.breakpoint.name }}
     <div style="width: 100%">
-      <v-row justify="center">
-        <v-col cols="4">
-          <v-card class="rounded-b-0">
-            <v-toolbar flat color="usa-blue" dense>
-              <v-toolbar-title class="text-h6 white--text pl-0">
-                Filtrar
-              </v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn text dark icon to="/choose-date">
-                <v-icon>mdi-arrow-left</v-icon>
-              </v-btn>
-            </v-toolbar>
-          </v-card>
-          <v-card class="py-8 px-5 mb-4 rounded-t-0">
-            <!-- <h1 class="pl-3">Filtrar</h1> -->
-            <ComboBox
-              :options01="xAxis"
-              :options02="yAxis"
-              text="Filtrar por:"
-              :axis="getCurrentAxes"
-            >
-            </ComboBox>
-          </v-card>
-          <v-card class="rounded-b-0">
-            <v-toolbar flat color="usa-blue" dense>
-              <v-toolbar-title class="text-h6 white--text pl-0">
-                Opciones
-              </v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn
-                text
-                dark
-                @click="
-                  () => {
-                    eChart = true;
-                    if (typeGraph[0] != 'e') {
-                      typeGraph = `e${typeGraph}`;
-                    }
-                  }
-                "
-              >
-                OP1
-                <v-icon>mdi-chart-scatter-plot</v-icon>
-              </v-btn>
-              <v-btn
-                text
-                dark
-                @click="
-                  () => {
-                    eChart = false;
-                    if (typeGraph[0] == 'e') {
-                      typeGraph = typeGraph.substr(1);
-                    }
-                  }
-                "
-              >
-                OP2
-                <v-icon>mdi-chart-scatter-plot</v-icon>
-              </v-btn>
-            </v-toolbar>
-          </v-card>
-
-          <v-card class="py-8 px-5 rounded-t-0">
-            <!-- TIPO -->
-            <!-- <v-row>
-              <v-btn outlined> Change grapht </v-btn>
-            </v-row> -->
-            <v-row justify="center">
-              <v-btn
-                class="mx-2"
-                icon
-                x-large
-                color="green"
-                @click="typeGraph = eChart ? 'epie' : 'pie'"
-              >
-                <v-icon dark> mdi-chart-pie </v-icon>
-              </v-btn>
-              <v-btn
-                class="mx-2"
-                icon
-                x-large
-                color="orange"
-                @click="typeGraph = eChart ? 'ebar' : 'bar'"
-              >
-                <v-icon dark> mdi-chart-bar </v-icon>
-              </v-btn>
-              <v-btn
-                class="mx-2"
-                icon
-                x-large
-                color="red"
-                @click="typeGraph = eChart ? 'edonut' : 'donut'"
-              >
-                <v-icon dark> mdi-chart-donut </v-icon>
-              </v-btn>
-              <v-btn
-                class="mx-2"
-                icon
-                x-large
-                color="blue"
-                @click="typeGraph = eChart ? 'eline' : 'line'"
-              >
-                <v-icon dark> mdi-chart-line </v-icon>
-              </v-btn>
-            </v-row>
-          </v-card>
-        </v-col>
-        <v-col cols="8">
+      <v-row justify="center" align="center">
+        <v-col cols="12" sm="12" md="8">
           <v-card class="rounded-b-0">
             <v-toolbar flat color="usa-blue" dense>
               <v-toolbar-title class="text-h6 white--text pl-0">
@@ -122,10 +17,10 @@
               :chartData="chartData"
               v-if="chartData && !chartLoading"
             ></Graph>
-            <!-- <v-img
+            <v-img
               lazy-src="../assets/img/pie-simple.svg"
               v-if="chartAltImage"
-              height="400px"
+              height="290px"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -136,7 +31,7 @@
                   ></v-progress-circular>
                 </v-row>
               </template>
-            </v-img> -->
+            </v-img>
             <!-- <v-container> -->
             <!-- <v-img
                 class="mb-2"
@@ -152,6 +47,118 @@
             ></v-progress-linear>
             <!-- </v-container> -->
           </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4">
+          <v-row>
+            <v-col cols="12" sm="6" md="12">
+              <v-card class="rounded-b-0">
+                <v-toolbar flat color="usa-blue" dense>
+                  <v-toolbar-title class="text-h6 white--text pl-0">
+                    Filtrar
+                  </v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn text dark icon to="/choose-date">
+                    <v-icon>mdi-arrow-left</v-icon>
+                  </v-btn>
+                </v-toolbar>
+              </v-card>
+              <v-card class="py-8 px-5 mb-4 rounded-t-0">
+                <!-- <h1 class="pl-3">Filtrar</h1> -->
+                <ComboBox
+                  :options01="xAxis"
+                  :options02="yAxis"
+                  text="Filtrar por:"
+                  :axis="getCurrentAxes"
+                >
+                </ComboBox>
+              </v-card>
+            </v-col>
+            <v-col cols="12" sm="6" md="12">
+              <v-card class="rounded-b-0">
+                <v-toolbar flat color="usa-blue" dense>
+                  <v-toolbar-title class="text-h6 white--text pl-0">
+                    Opciones
+                  </v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    text
+                    dark
+                    @click="
+                      () => {
+                        eChart = true;
+                        if (typeGraph[0] != 'e') {
+                          typeGraph = `e${typeGraph}`;
+                        }
+                      }
+                    "
+                  >
+                    OP1
+                    <v-icon>mdi-chart-scatter-plot</v-icon>
+                  </v-btn>
+                  <v-btn
+                    text
+                    dark
+                    @click="
+                      () => {
+                        eChart = false;
+                        if (typeGraph[0] == 'e') {
+                          typeGraph = typeGraph.substr(1);
+                        }
+                      }
+                    "
+                  >
+                    OP2
+                    <v-icon>mdi-chart-scatter-plot</v-icon>
+                  </v-btn>
+                </v-toolbar>
+              </v-card>
+
+              <v-card class="py-8 px-5 rounded-t-0">
+                <!-- TIPO -->
+                <!-- <v-row>
+                <v-btn outlined> Change grapht </v-btn>
+              </v-row> -->
+                <v-row justify="center">
+                  <v-btn
+                    class="mx-2"
+                    icon
+                    x-large
+                    color="green"
+                    @click="typeGraph = eChart ? 'epie' : 'pie'"
+                  >
+                    <v-icon dark> mdi-chart-pie </v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="mx-2"
+                    icon
+                    x-large
+                    color="orange"
+                    @click="typeGraph = eChart ? 'ebar' : 'bar'"
+                  >
+                    <v-icon dark> mdi-chart-bar </v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="mx-2"
+                    icon
+                    x-large
+                    color="red"
+                    @click="typeGraph = eChart ? 'edonut' : 'donut'"
+                  >
+                    <v-icon dark> mdi-chart-donut </v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="mx-2"
+                    icon
+                    x-large
+                    color="blue"
+                    @click="typeGraph = eChart ? 'eline' : 'line'"
+                  >
+                    <v-icon dark> mdi-chart-line </v-icon>
+                  </v-btn>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
       <v-row>
@@ -282,8 +289,13 @@ export default {
 <style>
 #statistics-container {
   /* ESTILOS DEL FONDO */
-  background: linear-gradient(to bottom right, #00457d40, #00447d40),
+  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+  /* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+  background-color: aqua;
 }
 
 /* ESTILOS DE LAS ESTADISTICAS */

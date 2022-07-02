@@ -64,7 +64,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 400,
+      default: 350,
     },
     cssClasses: {
       default: "",
@@ -79,33 +79,15 @@ export default {
       default: () => [],
     },
   },
-  // mixins: [VueCharts.mixins.reactiveProp],
-  mounted() {
-    // this.renderChart(this.chartData, this.options);
-  },
+  mounted() {},
   data() {
     return {
       barData: {
-        // labels: [
-        //   "January",
-        //   "February",
-        //   "March",
-        //   "April",
-        //   "May",
-        //   "June",
-        //   "July",
-        //   "August",
-        //   "September",
-        //   "October",
-        //   "November",
-        //   "December",
-        // ],
         labels: this.chartData["labels"],
         datasets: [
           {
             label: "Data One",
             backgroundColor: "#f87979",
-            // data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11],
             data: this.chartData["data"],
           },
         ],
@@ -113,6 +95,19 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+          x: {
+            ticks: {
+              // For a category axis, the val is the index so the lookup via getLabelForValue is needed
+              callback: function (val) {
+                // Hide the label of every 2nd dataset
+                return this.getLabelForValue(val).length > 5
+                  ? String(this.getLabelForValue(val)).substring(0, 7) + "..."
+                  : this.getLabelForValue(val);
+              },
+            },
+          },
+        },
       },
     };
   },

@@ -2,5 +2,5 @@ const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
     transpileDependencies: true,
-    publicPath: '/vue_usa_comex/',
+    // publicPath: '/vue_usa_comex/',
 });

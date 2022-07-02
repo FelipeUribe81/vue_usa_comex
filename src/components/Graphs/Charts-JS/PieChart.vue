@@ -90,14 +90,14 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          display: true,
-          labels: {
-            generateLabels() {
-              return ["asd","ads","sdad","SAD","sda","dsa","sda","ASd","sad","!asd"]
-            },
+        plugins: {
+          legend: {
+            display: true,
+            position: "bottom",
+
           },
         },
+
       },
     };
   },
