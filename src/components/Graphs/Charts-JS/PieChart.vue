@@ -1,19 +1,34 @@
 <template>
-  <Pie
-    :chart-options="chartOptions"
-    :chart-data="pieData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div>
+    <Pie
+      :chart-options="chartOptions"
+      :chart-data="pieData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height"
+    />
+  </div>
 </template>
 
 <script>
 import { Pie } from "vue-chartjs/legacy";
+
+const barBackgroundColors = [
+  "#893E94",
+  "#00457C",
+  "#419BD5",
+  "#00B050",
+  "#7DC464",
+  "#FBAC3E",
+  "#FEDE4B",
+  "#EE3430",
+  "#EE4677",
+  "#667773",
+];
 
 import {
   Chart as ChartJS,
@@ -94,10 +109,16 @@ export default {
           legend: {
             display: true,
             position: "bottom",
-
+            labels: {
+              generateLabels() {
+                return this.chartData["labels"].map((label, index) => ({
+                  text: label,
+                  fillStyle: barBackgroundColors[index],
+                }));
+              },
+            },
           },
         },
-
       },
     };
   },

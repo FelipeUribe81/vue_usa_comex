@@ -11,9 +11,10 @@
       :width="width"
       :height="height"
     /> -->
-    <Bar :chart-options="chartOptions" :chart-data="barData" />
-    <!-- Hola
-    {{ chartData }} -->
+    <Bar :chart-options="chartOptions" :chart-data="barData" ref="bar" />
+    <v-btn @click="viewChart">
+      MyTouch
+    </v-btn>
   </v-container>
 </template>
 
@@ -44,6 +45,12 @@ export default {
   name: "BarChart",
   components: {
     Bar,
+  },
+  methods:{
+    viewChart(){
+      console.log("Holi");
+      console.log(this.$refs.bar.legend);
+    }
   },
   props: {
     chartData: {

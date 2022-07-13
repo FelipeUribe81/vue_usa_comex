@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import StatisticsView from '../views/StatisticsView.vue'
 import DatePickerView from '../views/DatePickerView.vue'
+// import BarChartNew from '../components/Graphs/Charts-JS/BarChartNew.vue';
 // import StatisticsViewC from '../views/StatisticsView copy.vue'
 
 Vue.use(VueRouter)

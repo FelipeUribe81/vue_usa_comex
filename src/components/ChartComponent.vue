@@ -6,29 +6,15 @@
     </DonutChart>
     <PieChart v-if="typeGraph == 'pie'" :chartData="chartDataOne"></PieChart>
     <LineChart v-if="typeGraph == 'line'" :chartData="chartDataOne"></LineChart>
-    <PieEChart v-if="typeGraph == 'epie'" :chartData="chartDataTwo"></PieEChart>
-    <DonutEChart
-      v-if="typeGraph == 'edonut'"
-      :chartData="chartDataTwo"
-    ></DonutEChart>
-    <LineEChart
-      v-if="typeGraph == 'eline'"
-      :chartData="chartDataOne"
-    ></LineEChart>
-    <BarEChart v-if="typeGraph == 'ebar'" :chartData="chartDataOne"></BarEChart>
     <!-- {{ chartData }} -->
   </v-container>
 </template>
 
 <script>
 import BarChart from "./Graphs/Charts-JS/BarChart.vue";
-import BarEChart from "./Graphs/E-Charts/BarEChart.vue";
 import DonutChart from "./Graphs/Charts-JS/DonutChart.vue";
 import PieChart from "./Graphs/Charts-JS/PieChart.vue";
 import LineChart from "./Graphs/Charts-JS/LineChart.vue";
-import LineEChart from "./Graphs/E-Charts/LineEChart.vue";
-import PieEChart from "./Graphs/E-Charts/PieEChart.vue";
-import DonutEChart from "./Graphs/E-Charts/DonutEChart.vue";
 import { Global } from "../Global";
 
 export default {
@@ -38,10 +24,6 @@ export default {
     DonutChart,
     PieChart,
     LineChart,
-    PieEChart,
-    DonutEChart,
-    LineEChart,
-    BarEChart,
   },
   props: ["typeGraph", "chartData"],
   data() {

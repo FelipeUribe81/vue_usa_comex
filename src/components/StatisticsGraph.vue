@@ -47,7 +47,13 @@
 </template>
 
 <script>
+import Graph from "../components/ChartComponent.vue";
+
 export default {
   name: "StatisticsOptionsComponets",
+  components: {
+    Graph,
+  },
+  props: ["typeGraph", "chartData", "chartLoading", "chartAltImage"]
 };
 </script>
