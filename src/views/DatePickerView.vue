@@ -62,8 +62,8 @@
 </template>
 
 <script>
-// import ComboBox from "../components/ComboBoxComponent.vue";
 import DatePicker from "../components/DatePickerComponent.vue";
+import moment from 'moment';
 import axios from "axios";
 import { Global } from "../Global";
 
@@ -72,21 +72,16 @@ export default {
     return {
       url: Global.url,
       token: this.$cookies.get("sesion"),
-      // xAxis: [],
-      // yAxis: [],
       minDate: null,
       maxDate: null,
       startDate: null,
       finalDate: null,
-      // alert: false,
     };
   },
   components: {
-    // ComboBox,
     DatePicker,
   },
   mounted() {
-    // this.getAxes();
     this.getDatesAvailable();
   },
   methods: {
@@ -103,26 +98,7 @@ export default {
     saveDate(){
       localStorage.date = JSON.stringify({start: this.startDate, final: this.finalDate})
       this.$router.push ({name: 'statistics'}); 
-
-      // this.router.push({nombre: 'parasetEdid', params: {pk_refinfo: 'test', valor: 'test1'}});;
-      // this.$router.push ({nombre: 'statistics', params: {startDate: 'test', valor: 'test1'}});
     },
-    // Se necesita tener una sola vez
-    // getAxes() {
-    //   axios
-    //     .get(`${this.url}/importacion/axes/`, {
-    //       headers: {
-    //         Authorization: `Token ${this.token}`,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.status == 200) {
-    //         this.xAxis = res.data.eje_x;
-    //         this.yAxis = res.data.eje_y;
-    //       }
-    //     });
-    // },
     getDatesAvailable() {
       axios
         .get(`${this.url}/importacion/years/`, {
@@ -133,17 +109,19 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.status == 200) {
-            // let datesAvailable = res.data.map(
-            //   (date) => new Date(`${date.year}/${date.month}`)
-            // );
-            // this.maxDate = new Date(Math.max.apply(null, datesAvailable))
-            //   .toISOString()
-            //   .substr(0, 7);
-            this.maxDate = "2016-12"
-            // this.minDate = new Date(Math.min.apply(null, datesAvailable))
-            //   .toISOString()
-            //   .substr(0, 7);
-            this.minDate = "2015-01"
+            let datesAvailable = res.data.map(
+              (date) => moment(`${date.year}-${date.month}-01 08:00`, 'YYYY-MM-DD HH:mm').toDate()
+              
+
+            );
+            console.log(datesAvailable);
+            this.maxDate = new Date(Math.max.apply(null, datesAvailable))
+              .toISOString()
+              .substr(0, 7);
+            this.minDate = new Date(Math.min.apply(null, datesAvailable))
+              .toISOString()
+              .substr(0, 7);
+              console.log(`Date range: ${this.minDate} - ${this.maxDate}`);
           }
         });
     },
