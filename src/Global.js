@@ -10,6 +10,8 @@ export function isLogged(statusCode, router) {
             title: "Oops...",
             text: "Problemente no has iniciado sesion o tu sesion a caducado",
             allowOutsideClick: false,
+            confirmButtonText: 'Volver al incio',
+            confirmButtonColor: '#00457C',
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {

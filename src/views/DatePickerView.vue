@@ -4,7 +4,8 @@
       <v-row justify="center">
         <v-col cols="12" sm="12" md="12">
           <v-card>
-            <v-img id="statistics-banner" src="../assets/img/background.jpg"> </v-img>
+            <v-img id="statistics-banner" src="../assets/img/background.jpg">
+            </v-img>
             <v-card-title> Bienvenido a UsaComex </v-card-title>
           </v-card>
         </v-col>
@@ -13,7 +14,8 @@
         <v-col cols="12" sm="12" md="12" v-if="minDate && maxDate">
           <v-card class="px-4 pt-4">
             <p class="ml-3">
-              Rango de tiempo: Puede consultar cualquier rango de fechas siempre que este disponible.
+              Rango de tiempo: Puede consultar cualquier rango de fechas siempre
+              que este disponible.
             </p>
             <v-row>
               <v-col cols="12" md="6" class="date-picker-input mb-2">
@@ -32,8 +34,12 @@
                   :maxDate="maxDate"
                 ></DatePicker>
               </v-col>
-              <v-col cols="12" align="right">
-                <!-- @click="alert = true" -->
+              <v-col cols="12" class="px-6">
+                <v-alert dense outlined text type="error" v-if="!vaildDate"
+                  >La fecha inicial no puede ser mayor a la final</v-alert
+                >
+              </v-col>
+              <v-col cols="12" align="right" v-if="vaildDate">
                 <v-btn
                   class="mb-2 mr-3"
                   color="usa-blue"
@@ -55,17 +61,16 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
-      </v-row>
-    </div> 
+      <v-row> </v-row>
+    </div>
   </v-container>
 </template>
 
 <script>
 import DatePicker from "../components/DatePickerComponent.vue";
-import moment from 'moment';
+import moment from "moment";
 import axios from "axios";
-import { Global } from "../Global";
+import { Global, isLogged } from "../Global.js";
 
 export default {
   data() {
@@ -78,6 +83,15 @@ export default {
       finalDate: null,
     };
   },
+  computed: {
+    vaildDate() {
+      if (new Date(this.startDate) > new Date(this.finalDate)) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
   components: {
     DatePicker,
   },
@@ -87,17 +101,16 @@ export default {
   methods: {
     getStartDate(date) {
       this.startDate = date;
-      console.log("Inicio");
-      console.log(this.startDate);
     },
     getFinalDate(date) {
       this.finalDate = date;
-      console.log("Final");
-      console.log(this.finalDate);
     },
-    saveDate(){
-      localStorage.date = JSON.stringify({start: this.startDate, final: this.finalDate})
-      this.$router.push ({name: 'statistics'}); 
+    saveDate() {
+      localStorage.date = JSON.stringify({
+        start: this.startDate,
+        final: this.finalDate,
+      });
+      this.$router.push({ name: "statistics" });
     },
     getDatesAvailable() {
       axios
@@ -107,22 +120,23 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           if (res.status == 200) {
-            let datesAvailable = res.data.map(
-              (date) => moment(`${date.year}-${date.month}-01 08:00`, 'YYYY-MM-DD HH:mm').toDate()
-              
-
+            let datesAvailable = res.data.map((date) =>
+              moment(
+                `${date.year}-${date.month}-01 08:00`,
+                "YYYY-MM-DD HH:mm"
+              ).toDate()
             );
-            console.log(datesAvailable);
             this.maxDate = new Date(Math.max.apply(null, datesAvailable))
               .toISOString()
               .substr(0, 7);
             this.minDate = new Date(Math.min.apply(null, datesAvailable))
               .toISOString()
               .substr(0, 7);
-              console.log(`Date range: ${this.minDate} - ${this.maxDate}`);
           }
+        })
+        .catch((err) => {
+          isLogged(err.response.status, this.$router);
         });
     },
   },
@@ -130,22 +144,22 @@ export default {
 </script>
 
 <style>
-#statistics-container {
+/* #statistics-container {
    background: linear-gradient(rgba(5, 7, 12, 0.2), rgba(5, 7, 12, 0.54)),
-    url(https://img.freepik.com/free-vector/financial-business-statistics-with-bar-graph-candlestick-chart-show-effective-earning-background_120819-1005.jpg?w=2000);
+    url(https://img.freepik.com/foto-gratis/terminal-contenedores_1205-1193.jpg?w=2000);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; }
+  background-attachment: fixed; } */
 
-  /* align-items: initial; */
+/* align-items: initial; */
 
-  /* ESTILOS DEL FONDO */
-  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
+/* ESTILOS DEL FONDO */
+/* background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); */
-  /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
+/* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); } */
-  /* display: block !important;
+/* display: block !important;
 }
 
 /* ESTILOS DE LAS ESTADISTICAS */

@@ -46,6 +46,9 @@
                   dense
                   dark
                 />
+                <v-alert dense outlined text type="error" v-if="alert"
+                  >Usuario o contraseña no validos</v-alert
+                >
                 <v-btn type="submit" color="usa-blue" block dark>Login</v-btn>
               </v-form>
             </v-col>
@@ -92,25 +95,21 @@ export default {
           this.usaOutlook.test(value) ||
           "The email and password you entered don't match",
       },
+      alert: false,
     };
   },
   methods: {
     login() {
-      var ctx = this;
-      console.log("Hola");
-      console.log(`${this.url}/users/login/`);
       axios
         .post(`${this.url}/users/login/`, this.user)
         .then((res) => {
-          console.log(res);
           this.$cookies.set("sesion", res.data.token, res.data.expiry);
           this.$router.push("/choose-date");
         })
         .catch((error) => {
-          console.log(error);
+          this.alert = true;
         });
     },
-    // Después de login siempre se necesitan los headers
   },
 };
 </script>
@@ -209,7 +208,8 @@ export default {
   caret-color: white !important;
 }
 
-#form .theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
+#form
+  .theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
   > .v-input__control
   > .v-input__slot
   fieldset {
@@ -220,7 +220,10 @@ export default {
   border-color: #fdf21c !important;
 }
 
-#form .v-text-field.v-input--has-state > .v-input__control > .v-input__slot:before {
+#form
+  .v-text-field.v-input--has-state
+  > .v-input__control
+  > .v-input__slot:before {
   border-color: #ff5252 !important;
 }
 

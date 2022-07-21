@@ -11,11 +11,21 @@
           "
         >
           <!-- Statistics Options -->
-          <StatisticsOptions :xAxis=xAxis :yAxis=yAxis :getCurrentAxes=getCurrentAxes :typeGraph=getCurrentGraph></StatisticsOptions>
+          <StatisticsOptions
+            :xAxis="xAxis"
+            :yAxis="yAxis"
+            :getCurrentAxes="getCurrentAxes"
+            :typeGraph="getCurrentGraph"
+          ></StatisticsOptions>
         </v-col>
         <v-col cols="12" sm="12" md="8">
           <!-- Statistics Graph -->
-          <StatisticsGraph :typeGraph=typeGraph :chartData=chartData :chartLoading=chartLoading :chartAltImage=chartAltImage></StatisticsGraph>
+          <StatisticsGraph
+            :typeGraph="typeGraph"
+            :chartData="chartData"
+            :chartLoading="chartLoading"
+            :chartAltImage="chartAltImage"
+          ></StatisticsGraph>
         </v-col>
         <v-col
           cols="12"
@@ -26,7 +36,12 @@
           "
         >
           <!-- Statistics Options -->
-          <StatisticsOptions :xAxis=xAxis :yAxis=yAxis :getCurrentAxes=getCurrentAxes :typeGraph=getCurrentGraph></StatisticsOptions>
+          <StatisticsOptions
+            :xAxis="xAxis"
+            :yAxis="yAxis"
+            :getCurrentAxes="getCurrentAxes"
+            :typeGraph="getCurrentGraph"
+          ></StatisticsOptions>
         </v-col>
       </v-row>
       <v-row>
@@ -47,11 +62,10 @@
 
 <script>
 import Table from "../components/TableComponent.vue";
-// import DatePicker from "../components/DatePickerComponent.vue";
 import StatisticsOptions from "../components/StatisticsOptions.vue";
 import StatisticsGraph from "../components/StatisticsGraph.vue";
 import axios from "axios";
-import { Global } from "../Global.js";
+import { Global, isLogged } from "../Global.js";
 
 export default {
   data() {
@@ -61,11 +75,6 @@ export default {
       yAxis: [],
       token: this.$cookies.get("sesion"),
       datesAvailable: null,
-      // minDate: null,
-      // maxDate: null,
-      // startDate: null,
-      // finalDate: null,
-      // alert: false,
       typeGraph: "bar",
       eChart: false,
       dataParameters: null,
@@ -81,16 +90,9 @@ export default {
   },
   mounted() {
     this.getAxes();
-    // this.dataParameters = {
-    //   fecha_inicio: "2015-01",
-    //   fecha_fin: "2015-01",
-    //   eje_x: "Acuerdo de tratamiendo arancelario",
-    //   eje_y: "Arancel pagado",
-    // };
-    // this.getGraphData(this.dataParameters);
   },
   methods: {
-    getCurrentGraph(typeGraph){
+    getCurrentGraph(typeGraph) {
       this.typeGraph = typeGraph;
       console.log(typeGraph);
     },
@@ -145,15 +147,9 @@ export default {
           }
         })
         .catch((err) => {
-          console.log("ERROR");
-          console.log(Object.values(err));
-          console.log(Object.keys(err));
-          console.log(err.response.status);
-          console.log(err.response.statusText);
-          console.log(err.message);
+          isLogged(err.response.status, this.$router);
         });
     },
-    // getDateInterval() {},
   },
 };
 </script>
@@ -161,14 +157,14 @@ export default {
 <style>
 #statistics-container {
   /* ESTILOS DEL FONDO */
-  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
+  background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
-} */
+}
   /* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
 } */
-  background-color: aqua;
-}
+  /* background-color: aqua;
+} */
 
 /* ESTILOS DE LAS ESTADISTICAS */
 /* ESTILOS DEL BANNER DE BIENVENIDA */
