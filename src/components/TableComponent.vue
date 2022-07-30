@@ -101,17 +101,6 @@ export default {
           console.log(err);
         });
     },
-
-    // let dates = JSON.parse(localStorage.date);
-    // if (axes["eje_x"] != null && axes["eje_y"] != null) {
-    //   this.dataParameters = {
-    //     fecha_inicio: dates["start"],
-    //     fecha_fin: dates["final"],
-    //     eje_x: axes["eje_x"],
-    //     eje_y: axes["eje_y"],
-    //   };
-    //   this.getGraphData(this.dataParameters);
-    // }
   },
 };
 </script>

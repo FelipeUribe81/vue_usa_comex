@@ -8,7 +8,7 @@ export function isLogged(statusCode, router) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Problemente no has iniciado sesion o tu sesion a caducado",
+            text: "Problemente no has iniciado sesion o tu sesion ha caducado",
             allowOutsideClick: false,
             confirmButtonText: 'Volver al incio',
             confirmButtonColor: '#00457C',

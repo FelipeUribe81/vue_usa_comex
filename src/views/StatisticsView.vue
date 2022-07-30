@@ -157,7 +157,13 @@ export default {
 <style>
 #statistics-container {
   /* ESTILOS DEL FONDO */
-  background: linear-gradient(to bottom right, #00457d40, #00447d40),
+  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+  /* background: linear-gradient(to bottom right, #0061ff40, #60efff70),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+  background: linear-gradient(#145377af, #83d0cb60),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
 }
   /* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),

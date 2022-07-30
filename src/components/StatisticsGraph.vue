@@ -3,15 +3,16 @@
     <v-card class="rounded-b-0">
       <v-toolbar flat color="usa-blue" dense>
         <v-toolbar-title class="text-h6 white--text pl-0">
-          Graficos
+          Gráficos
         </v-toolbar-title>
       </v-toolbar>
     </v-card>
     <v-card class="py-8 px-5 rounded-t-0">
+      <!-- v-if="chartData && !chartLoading" -->
       <Graph
         :typeGraph="typeGraph"
         :chartData="chartData"
-        v-if="chartData && !chartLoading"
+        v-if="chartData"
       ></Graph>
       <v-img
         lazy-src="../assets/img/pie-simple.svg"
