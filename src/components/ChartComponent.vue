@@ -57,14 +57,17 @@ export default {
 </script>
 
 <style>
-#myChart {
+#myChartPieOrDonut {
   max-height: 300px;
+}
+
+#myChartBarOrLine {
+  max-height: 450px;
 }
 
 #customLegend {
   margin-top: 50px;
   display: flex;
-  /* justify-content: center; */
   text-align: center;
 }
 
@@ -89,7 +92,7 @@ export default {
 
 #customLegend ul li a {
   display: -webkit-inline-box;
-  width: 200px;
+  width: 180px;
   color: rgb(102, 102, 102, 1);
   overflow: hidden;
   -webkit-line-clamp: 1; /* number of lines to show */

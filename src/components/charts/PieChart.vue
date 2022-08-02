@@ -1,7 +1,7 @@
 <template>
   <div class="chartCard">
     <div class="chartBox" justify="center">
-      <canvas id="myChart" style="height:20vh; width:20vw"></canvas>
+      <canvas id="myChartPieOrDonut" style="height:20vh; width:20vw"></canvas>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: "PieChart",
   props: ["chartData"],
   mounted() {
-    var ctx = document.getElementById("myChart").getContext("2d");
+    var ctx = document.getElementById("myChartPieOrDonut").getContext("2d");
     myChart = new Chart(
       ctx,
       doughnut_or_pie_data(this.chartData.labels, this.chartData.data, "pie")

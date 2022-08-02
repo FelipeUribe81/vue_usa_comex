@@ -61,7 +61,6 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row> </v-row>
     </div>
   </v-container>
 </template>
@@ -70,7 +69,7 @@
 import DatePicker from "../components/DatePickerComponent.vue";
 import moment from "moment";
 import axios from "axios";
-import { Global, isLogged } from "../Global.js";
+import { Global, isLogged, serverError } from "../Global.js";
 
 export default {
   data() {
@@ -137,6 +136,7 @@ export default {
         })
         .catch((err) => {
           isLogged(err.response.status, this.$router);
+          serverError(err.response.status, this.$router);
         });
     },
   },

@@ -65,7 +65,7 @@ import Table from "../components/TableComponent.vue";
 import StatisticsOptions from "../components/StatisticsOptions.vue";
 import StatisticsGraph from "../components/StatisticsGraph.vue";
 import axios from "axios";
-import { Global, isLogged } from "../Global.js";
+import { Global, isLogged, serverError } from "../Global.js";
 
 export default {
   data() {
@@ -129,6 +129,10 @@ export default {
             this.chartLoading = false;
             this.chartData = res.data;
           }
+        })
+        .catch((err) => {
+          isLogged(err.response.status, this.$router);
+          serverError(err.response.status, this.$router);
         });
     },
     getAxes() {
@@ -148,6 +152,7 @@ export default {
         })
         .catch((err) => {
           isLogged(err.response.status, this.$router);
+          serverError(err.response.status, this.$router);
         });
     },
   },
@@ -166,10 +171,10 @@ export default {
   background: linear-gradient(#145377af, #83d0cb60),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
 }
-  /* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),
+/* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
 } */
-  /* background-color: aqua;
+/* background-color: aqua;
 } */
 
 /* ESTILOS DE LAS ESTADISTICAS */

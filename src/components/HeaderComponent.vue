@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { Global, isLogged } from "../Global.js";
+import { Global, isLogged, serverError } from "../Global.js";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -63,6 +63,7 @@ export default {
             })
             .catch((err) => {
               isLogged(err.response.status, this.$router);
+              serverError(err.response.status, this.$router);
             });
         }
       });

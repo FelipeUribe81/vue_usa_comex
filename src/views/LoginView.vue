@@ -108,6 +108,7 @@ export default {
         })
         .catch((error) => {
           this.alert = true;
+          serverError(err.response.status, this.$router);
         });
     },
   },

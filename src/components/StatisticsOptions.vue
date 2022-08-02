@@ -24,6 +24,7 @@
           </ComboBox>
         </v-card>
       </v-col>
+
       <v-col cols="12" sm="6" md="12">
         <v-card class="rounded-b-0">
           <v-toolbar flat color="usa-blue" dense>
@@ -72,6 +73,27 @@
             >
               <v-icon dark> mdi-chart-line </v-icon>
             </v-btn>
+          </v-row>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" sm="6" md="12">
+        <v-card class="rounded-b-0">
+          <v-toolbar flat color="usa-blue" dense>
+            <v-toolbar-title class="text-h6 white--text pl-0">
+              Reporte Grafico
+            </v-toolbar-title>
+          </v-toolbar>
+        </v-card>
+        <v-card class="py-8 px-5 mb-4 rounded-t-0">
+          <v-row justify="center">
+          <v-btn
+            plain
+            
+          >
+            <v-icon dark class="mr-2"> mdi-download </v-icon>
+            Descargar
+          </v-btn>
           </v-row>
         </v-card>
       </v-col>
