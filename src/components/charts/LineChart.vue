@@ -26,6 +26,7 @@ export default {
             label: "# of Votes",
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
+              "#EE467720",
               "#893E9420",
               "#00457C20",
               "#419BD520",
@@ -34,18 +35,10 @@ export default {
               "#FBAC3E20",
               "#FEDE4B20",
               "#EE343020",
-              "#EE467720",
               "#66777320",
             ],
-            // backgroundColor: [
-            //   "rgba(255, 99, 132, 0.2)",
-            //   "rgba(54, 162, 235, 0.2)",
-            //   "rgba(255, 206, 86, 0.2)",
-            //   "rgba(75, 192, 192, 0.2)",
-            //   "rgba(153, 102, 255, 0.2)",
-            //   "rgba(255, 159, 64, 0.2)",
-            // ],
             borderColor: [
+              "#EE4677",
               "#893E94",
               "#00457C",
               "#419BD5",
@@ -54,7 +47,6 @@ export default {
               "#FBAC3E",
               "#FEDE4B",
               "#EE3430",
-              "#EE4677",
               "#667773",
             ],
             // borderColor: [

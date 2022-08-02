@@ -5,9 +5,6 @@ import LoginView from '../views/LoginView.vue'
 import StatisticsView from '../views/StatisticsView.vue'
 import DatePickerView from '../views/DatePickerView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
-// import BarChartNew from '../components/Graphs/ChartsJs/BarChart/BarChart.vue';
-import PieChartNew from '../components/Graphs/ChartsJs/PieChart/PieChart.vue';
-// import StatisticsViewC from '../views/StatisticsView copy.vue'
 
 Vue.use(VueRouter)
 
@@ -45,11 +42,6 @@ const routes = [{
         path: '/statistics',
         name: 'statistics',
         component: StatisticsView
-    },
-    {
-        path: '/test',
-        name: 'test',
-        component: PieChartNew
     },
     {
         path: '/:pathMatch(.*)*',

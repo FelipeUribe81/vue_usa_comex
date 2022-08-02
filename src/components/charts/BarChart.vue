@@ -26,22 +26,30 @@ export default {
         {
           label: "Weekly Sales",
           data: [18, 12, 6, 9, 12, 3, 9],
-          backgroundColor: ["rgba(75, 192, 192, 0.2)"],
-          borderColor: ["rgba(75, 192, 192, 1)"],
-          borderWidth: 1,
-        },
-        {
-          label: "Weekly Profits",
-          data: [18, 12, 6, 9, 12, 3, 9],
-          backgroundColor: ["rgba(0, 26, 104, 0.2)"],
-          borderColor: ["rgba(0, 26, 104, 1)"],
-          borderWidth: 1,
-        },
-        {
-          label: "Weekly Cost",
-          data: [18, 12, 6, 9, 12, 3, 9],
-          backgroundColor: ["rgba(255, 26, 104, 0.2)"],
-          borderColor: ["rgba(255, 26, 104, 1)"],
+          backgroundColor: [
+            "#EE343060",
+            "#893E9460",
+            "#419BD560",
+            "#00457C60",
+            "#7DC46460",
+            "#00B05060",
+            "#FEDE4B60",
+            "#FBAC3E60",
+            "#EE467760",
+            "#66777360",
+          ],
+          borderColor: [
+            "#EE343080",
+            "#893E9480",
+            "#419BD580",
+            "#00457C80",
+            "#7DC46480",
+            "#00B05080",
+            "#FEDE4B80",
+            "#FBAC3E80",
+            "#EE467780",
+            "#66777380",
+          ],
           borderWidth: 1,
         },
       ],
@@ -52,11 +60,6 @@ export default {
       type: "bar",
       data,
       options: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
         scales: {
           y: {
             beginAtZero: true,

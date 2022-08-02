@@ -14,21 +14,6 @@
         :chartData="chartData"
         v-if="chartData"
       ></Graph>
-      <v-img
-        lazy-src="../assets/img/pie-simple.svg"
-        v-if="chartAltImage"
-        height="290px"
-      >
-        <template v-slot:placeholder>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular
-              indeterminate
-              color="grey lighten-5"
-              v-if="chartLoading"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
       <!-- <v-container> -->
       <!-- <v-img
                 class="mb-2"
@@ -55,6 +40,12 @@ export default {
   components: {
     Graph,
   },
-  props: ["typeGraph", "chartData", "chartLoading", "chartAltImage"]
+  props: ["typeGraph", "chartData", "chartLoading", "chartAltImage"],
+  watch: {
+    chartData: function (newVal, oldVal) {
+      // this.$forceUpdate();
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
+    },
+  },
 };
 </script>
