@@ -1,5 +1,3 @@
-import html2canvas from "html2canvas";
-
 export function generateLegend(myChart) {
     //get the selected location
     const chartBox = document.querySelector(".chartBox");
@@ -75,12 +73,3 @@ export const borderColor = [
     "#EE467780",
     "#66777380",
 ];
-
-export function createChartImage() {
-    var element = document.getElementById("vue-chart-container");
-    html2canvas(element).then(function(canvas) {
-        var url_base64 = canvas.toDataURL("image/jpeg");
-        var button = document.getElementById("download-chart");
-        button.href = url_base64;
-    });
-}

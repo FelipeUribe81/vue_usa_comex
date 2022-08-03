@@ -88,12 +88,10 @@
         <v-card class="py-8 px-5 mb-4 rounded-t-0">
           <v-row justify="center">
             <v-col cols="6" sm="6" md="6" justify="center">
-              <a id="download-chart" download="chart.jpeg">
-                <v-btn class="ml-4" plain>
-                  <v-icon dark class="mr-2"> mdi-download </v-icon>
-                  Grafico
-                </v-btn>
-              </a>
+              <v-btn class="ml-4" plain @click="createChartImage">
+                <v-icon dark class="mr-2"> mdi-download </v-icon>
+                Grafico
+              </v-btn>
             </v-col>
             <v-col cols="6" sm="6" md="6" justify="center">
               <v-btn class="ml-4" plain>
@@ -102,15 +100,24 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row  justify="center">
-            <v-alert class="mt-4" color="#2A3B4D" dark icon="mdi-firework">
-              Esta seguro de descargar el grafico 
-              <v-btn plain>
-                Si
-              </v-btn>
-              <v-btn plain>
-                No
-              </v-btn>
+          <v-row justify="center">
+            <v-alert
+              class="mt-2"
+              dense
+              color="usa-blue"
+              border="left"
+              type="info"
+              v-if="chartAlert"
+            >
+              ¿Está seguro de descargar el grafico?
+              <a
+                id="download-chart"
+                download="chart.jpeg"
+                @click="chartAlert = false"
+              >
+                <v-btn plain> Si </v-btn>
+              </a>
+              <v-btn plain @click="chartAlert = false"> No </v-btn>
             </v-alert>
           </v-row>
         </v-card>
@@ -121,37 +128,33 @@
 
 <script>
 import ComboBox from "../components/ComboBoxComponent.vue";
-// import $ from "jquery";
-
-// function downloadURI(uri, name) {
-//     var link = document.getElementById("download-chart");
-
-//     link.download = name;
-//     link.href = uri;
-//     document.body.appendChild(link);
-//     link.click();
-//     clearDynamicLink(link);
-// }
-
-// function DownloadAsImage() {
-//     var element = document.getElementById("vue-chart-container")[0];
-//     html2canvas(element).then(function (canvas) {
-//         var myImage = canvas.toDataURL();
-//         downloadURI(myImage, "cartao-virtual.png");
-//     });
-// }
+import html2canvas from "html2canvas";
 
 export default {
   name: "StatisticsOptionsComponets",
   components: {
     ComboBox,
   },
+  data() {
+    return {
+      chartAlert: false,
+    };
+  },
   props: ["xAxis", "yAxis", "getCurrentAxes", "typeGraph"],
   methods: {
     updateGraph(typeGraph) {
       this.typeGraph(typeGraph);
     },
-
+    createChartImage() {
+      this.chartAlert = true;
+      var element = document.getElementById("vue-chart-container");
+      html2canvas(element).then(function (canvas) {
+        var url_base64 = canvas.toDataURL("image/jpeg");
+        var button = document.getElementById("download-chart");
+        button.href = url_base64;
+        button.style = "text-decoration: none;";
+      });
+    },
   },
 };
 </script>
