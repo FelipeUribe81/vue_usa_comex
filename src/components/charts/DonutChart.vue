@@ -9,7 +9,11 @@
 <script>
 import Chart from "chart.js/auto";
 import { doughnut_or_pie_data } from "./chartData.js";
-import { generateLegend, clearLegend } from './chartUtilities'
+import {
+  generateLegend,
+  clearLegend,
+  // createChartImage,
+} from "./chartUtilities";
 
 var myChart;
 export default {
@@ -19,7 +23,11 @@ export default {
     var ctx = document.getElementById("myChartPieOrDonut").getContext("2d");
     myChart = new Chart(
       ctx,
-      doughnut_or_pie_data(this.chartData.labels, this.chartData.data, "doughnut")
+      doughnut_or_pie_data(
+        this.chartData.labels,
+        this.chartData.data,
+        "doughnut"
+      )
     );
     generateLegend(myChart);
   },
@@ -28,9 +36,9 @@ export default {
       console.log("Desde el donut");
       console.log(myChart);
       console.log("Dtasets");
-      myChart.data.datasets[0].data = newVal.data
+      myChart.data.datasets[0].data = newVal.data;
       myChart.data.labels = newVal.labels;
-      clearLegend()
+      clearLegend();
       generateLegend(myChart);
       myChart.update();
       console.log("Prop changed: ", newVal, " | was: ");

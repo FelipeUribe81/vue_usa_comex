@@ -42,7 +42,7 @@ export function bar_or_line_data(chartLabels, charData, charType, chartLabel) {
             responsive: true,
             plugins: {
                 legend: {
-                    display: true,
+                    display: false,
                 }
             },
             scales: {

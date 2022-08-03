@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="vue-chart-container">
     <!-- GRAPH -->
     <BarChart v-if="typeGraph == 'bar'" :chartData="chartDataOne"></BarChart>
     <DonutChart
@@ -62,7 +62,7 @@ export default {
 }
 
 #myChartBarOrLine {
-  max-height: 450px;
+  max-height: 430px;
 }
 
 #customLegend {

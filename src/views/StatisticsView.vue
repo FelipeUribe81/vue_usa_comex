@@ -24,7 +24,6 @@
             :typeGraph="typeGraph"
             :chartData="chartData"
             :chartLoading="chartLoading"
-            :chartAltImage="chartAltImage"
           ></StatisticsGraph>
         </v-col>
         <v-col
@@ -75,12 +74,11 @@ export default {
       yAxis: [],
       token: this.$cookies.get("sesion"),
       datesAvailable: null,
-      typeGraph: "bar",
+      typeGraph: "pie",
       eChart: false,
       dataParameters: null,
       chartData: null,
       chartLoading: false,
-      chartAltImage: true,
     };
   },
   components: {
@@ -114,7 +112,6 @@ export default {
     getGraphData(dataParameters) {
       console.log(this.dataParameters);
       this.chartLoading = true;
-      this.chartAltImage = true;
       axios
         .post(`${this.url}/importacion/data/`, dataParameters, {
           headers: {
@@ -125,7 +122,6 @@ export default {
           console.log("Data");
           console.log(res);
           if (res.status == 200) {
-            this.chartAltImage = false;
             this.chartLoading = false;
             this.chartData = res.data;
           }
@@ -148,6 +144,7 @@ export default {
           if (res.status == 200) {
             this.xAxis = res.data.eje_x;
             this.yAxis = res.data.eje_y;
+            this.initialChartData({eje_x:res.data.eje_x[0], eje_y:res.data.eje_y[3]})
           }
         })
         .catch((err) => {

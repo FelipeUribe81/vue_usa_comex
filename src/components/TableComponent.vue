@@ -4,7 +4,6 @@
       :headers="tableHeader"
       :items="tableData"
       :loading="loadingData"
-      loading-text="Cargando datos... Por favor espere"
       :items-per-page="itemsPerPage"
       hide-default-footer
     ></v-data-table>
@@ -12,7 +11,7 @@
       <v-pagination
         v-model="page"
         :length="pageCount"
-        total-visible="6"
+        total-visible="10"
         v-if="!loadingRows"
       ></v-pagination>
       <v-progress-circular

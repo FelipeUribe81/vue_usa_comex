@@ -1,7 +1,7 @@
 <template>
   <div class="chartCard">
     <div class="chartBox" justify="center">
-      <canvas id="myChartPieOrDonut" style="height:20vh; width:20vw"></canvas>
+      <canvas id="myChartPieOrDonut" style="height: 20vh; width: 20vw"></canvas>
     </div>
   </div>
 </template>
@@ -9,7 +9,11 @@
 <script>
 import Chart from "chart.js/auto";
 import { doughnut_or_pie_data } from "./chartData.js";
-import { generateLegend, clearLegend } from './chartUtilities'
+import {
+  generateLegend,
+  clearLegend,
+  // createChartImage,
+} from "./chartUtilities";
 
 var myChart;
 export default {
@@ -28,9 +32,9 @@ export default {
       console.log("Desde el donut");
       console.log(myChart);
       console.log("Dtasets");
-      myChart.data.datasets[0].data = newVal.data
+      myChart.data.datasets[0].data = newVal.data;
       myChart.data.labels = newVal.labels;
-      clearLegend()
+      clearLegend();
       generateLegend(myChart);
       myChart.update();
       console.log("Prop changed: ", newVal, " | was: ");

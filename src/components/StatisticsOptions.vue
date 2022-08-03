@@ -5,7 +5,7 @@
         <v-card class="rounded-b-0">
           <v-toolbar flat color="usa-blue" dense>
             <v-toolbar-title class="text-h6 white--text pl-0">
-              Filtrar
+              Seleccionar ejes
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn text dark icon to="/choose-date">
@@ -81,19 +81,37 @@
         <v-card class="rounded-b-0">
           <v-toolbar flat color="usa-blue" dense>
             <v-toolbar-title class="text-h6 white--text pl-0">
-              Reporte Grafico
+              Descargar reportes
             </v-toolbar-title>
           </v-toolbar>
         </v-card>
         <v-card class="py-8 px-5 mb-4 rounded-t-0">
           <v-row justify="center">
-          <v-btn
-            plain
-            
-          >
-            <v-icon dark class="mr-2"> mdi-download </v-icon>
-            Descargar
-          </v-btn>
+            <v-col cols="6" sm="6" md="6" justify="center">
+              <a id="download-chart" download="chart.jpeg">
+                <v-btn class="ml-4" plain>
+                  <v-icon dark class="mr-2"> mdi-download </v-icon>
+                  Grafico
+                </v-btn>
+              </a>
+            </v-col>
+            <v-col cols="6" sm="6" md="6" justify="center">
+              <v-btn class="ml-4" plain>
+                <v-icon dark class="mr-2"> mdi-download </v-icon>
+                Tabla
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row  justify="center">
+            <v-alert class="mt-4" color="#2A3B4D" dark icon="mdi-firework">
+              Esta seguro de descargar el grafico 
+              <v-btn plain>
+                Si
+              </v-btn>
+              <v-btn plain>
+                No
+              </v-btn>
+            </v-alert>
           </v-row>
         </v-card>
       </v-col>
@@ -103,6 +121,25 @@
 
 <script>
 import ComboBox from "../components/ComboBoxComponent.vue";
+// import $ from "jquery";
+
+// function downloadURI(uri, name) {
+//     var link = document.getElementById("download-chart");
+
+//     link.download = name;
+//     link.href = uri;
+//     document.body.appendChild(link);
+//     link.click();
+//     clearDynamicLink(link);
+// }
+
+// function DownloadAsImage() {
+//     var element = document.getElementById("vue-chart-container")[0];
+//     html2canvas(element).then(function (canvas) {
+//         var myImage = canvas.toDataURL();
+//         downloadURI(myImage, "cartao-virtual.png");
+//     });
+// }
 
 export default {
   name: "StatisticsOptionsComponets",
@@ -114,6 +151,7 @@ export default {
     updateGraph(typeGraph) {
       this.typeGraph(typeGraph);
     },
+
   },
 };
 </script>

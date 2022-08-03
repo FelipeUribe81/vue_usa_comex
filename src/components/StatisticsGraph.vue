@@ -15,12 +15,12 @@
         v-if="chartData"
       ></Graph>
       <!-- <v-container> -->
-      <!-- <v-img
-                class="mb-2"
-                lazy-src="../assets/img/pie-simple.svg"
-                v-if="chartAltImage"
-                height="400px"
-              ></v-img> -->
+      <v-img
+        class="mb-2"
+        lazy-src="../assets/img/ExampleChart.jpg"
+        v-if="chartData==null"
+  
+      ></v-img>
       <v-progress-linear
         indeterminate
         color="usa-blue"

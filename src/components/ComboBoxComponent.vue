@@ -1,11 +1,9 @@
 <template>
-  <!-- <v-card id="boxCard" class="rounded-lg"> -->
-  <v-container id="boxCard">
-    <div></div>
-    <!-- <h1 class="pl-8 pt-4">{{ text }}</h1> -->
+  <v-container id="boxCard" v-if="options01!=null && options02!=null">
     <v-row class="mb-2">
       <v-col cols="12" sm="12" md="6">
         <v-combobox
+          label="Eje x"
           v-model="eje_x"
           :items="options01"
           :placeholder="options01[0]"
@@ -17,6 +15,7 @@
       </v-col>
       <v-col cols="12" sm="12" md="6">
         <v-combobox
+          label="Eje y"
           v-model="eje_y"
           :items="options02"
           :placeholder="options02[0]"
@@ -46,9 +45,15 @@ export default {
       this.axis({ eje_x: this.eje_x, eje_y: this.eje_y });
     },
   },
-  mounted() {
-    // this.sendAxes();
-  },
+  // watch: {
+  //   options01: function (){
+  //     // console.log("PERR");
+  //     this.sendAxes()
+  //   },
+  //   options02: function (){
+  //     this.sendAxes()
+  //   }
+  // }
 };
 </script>
 
