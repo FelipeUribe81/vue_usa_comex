@@ -53,13 +53,6 @@
               </v-form>
             </v-col>
           </v-row>
-          <!-- Signup info -->
-          <div id="signup">
-            <p>
-              New to UsaComex?
-              <router-link to="/login">Create an account</router-link>
-            </p>
-          </div>
           <!-- End login box secction-->
         </v-card>
       </v-col>
@@ -84,9 +77,9 @@ export default {
       },
       url: Global.url,
       usaGmail:
-        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@correo([\.])usa([\.])edu([\.])co/,
+        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@correo([\.])usa([\.])edu([\.])co\b/,
       usaOutlook:
-        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@usa([\.])edu([\.])co/,
+        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@usa([\.])edu([\.])co\b/,
       rules: {
         required: (value) => !!value || "This field is Required",
         min: (value) => value.length >= 8 || "Min 8 characters",
@@ -173,27 +166,6 @@ export default {
 
 #form a:active {
   color: #035add;
-  font-size: 15px;
-}
-
-#signup {
-  margin-top: 35px;
-  text-align: center;
-  font-size: 14px;
-}
-
-#signup a {
-  text-decoration: none;
-  color: #fdf21c;
-}
-
-#signup a:hover {
-  text-decoration: underline;
-  color: #dbd000;
-}
-
-#signup a:active {
-  color: #8d870d;
   font-size: 15px;
 }
 

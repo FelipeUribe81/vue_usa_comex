@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" sm="6" md="12">
+      <v-col cols="12" sm="12" md="12">
         <v-card class="rounded-b-0">
           <v-toolbar flat color="usa-blue" dense>
             <v-toolbar-title class="text-h6 white--text pl-0">
@@ -85,42 +85,44 @@
             </v-toolbar-title>
           </v-toolbar>
         </v-card>
-        <v-card class="py-8 px-5 mb-4 rounded-t-0">
+        <v-card
+          :class="{
+            'py-8 px-5 rounded-0': chartAlert,
+            'py-8 px-5 rounded-t-0': !chartAlert,
+          }"
+        >
           <v-row justify="center">
-            <v-col cols="6" sm="6" md="6" justify="center">
-              <v-btn class="ml-4" plain @click="createChartImage">
+            <v-col cols="12" sm="6" md="6" justify="center">
+              <v-btn plain @click="createChartImage">
                 <v-icon dark class="mr-2"> mdi-download </v-icon>
                 Grafico
               </v-btn>
             </v-col>
-            <v-col cols="6" sm="6" md="6" justify="center">
-              <v-btn class="ml-4" plain>
+            <v-col cols="12" sm="6" md="6" justify="center">
+              <v-btn plain>
                 <v-icon dark class="mr-2"> mdi-download </v-icon>
                 Tabla
               </v-btn>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-alert
-              class="mt-2"
-              dense
-              color="usa-blue"
-              border="left"
-              type="info"
-              v-if="chartAlert"
-            >
-              ¿Está seguro de descargar el grafico?
-              <a
-                id="download-chart"
-                download="chart.jpeg"
-                @click="chartAlert = false"
-              >
-                <v-btn plain> Si </v-btn>
-              </a>
-              <v-btn plain @click="chartAlert = false"> No </v-btn>
-            </v-alert>
-          </v-row>
         </v-card>
+        <v-alert
+          class="rounded-t-0"
+          dense
+          color="usa-blue"
+          type="info"
+          v-if="chartAlert"
+        >
+          ¿Está seguro de descargar el grafico?
+          <a
+            id="download-chart"
+            download="chart.jpeg"
+            @click="chartAlert = false"
+          >
+            <v-btn plain> Si </v-btn>
+          </a>
+          <v-btn plain @click="chartAlert = false"> No </v-btn>
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -129,6 +131,7 @@
 <script>
 import ComboBox from "../components/ComboBoxComponent.vue";
 import html2canvas from "html2canvas";
+// const xl = require("excel4node");
 
 export default {
   name: "StatisticsOptionsComponets",
@@ -154,6 +157,33 @@ export default {
         button.href = url_base64;
         button.style = "text-decoration: none;";
       });
+    },
+    downloadTable() {
+      // const wb = new xl.Workbook();
+      // const ws = wb.addWorksheet("Worksheet Name");
+      // const data = [
+      //   {
+      //     name: "Shadab Shaikh",
+      //     email: "shadab@gmail.com",
+      //     mobile: "1234567890",
+      //   },
+      // ];
+      // const headingColumnNames = ["Name", "Email", "Mobile"];
+      // //Write Column Title in Excel file
+      // let headingColumnIndex = 1;
+      // headingColumnNames.forEach((heading) => {
+      //   ws.cell(1, headingColumnIndex++).string(heading);
+      // });
+      // //Write Data in Excel file
+      // let rowIndex = 2;
+      // data.forEach((record) => {
+      //   let columnIndex = 1;
+      //   Object.keys(record).forEach((columnName) => {
+      //     ws.cell(rowIndex, columnIndex++).string(record[columnName]);
+      //   });
+      //   rowIndex++;
+      // });
+      // wb.write("data.xlsx");
     },
   },
 };

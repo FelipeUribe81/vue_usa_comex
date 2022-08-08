@@ -8,18 +8,16 @@
       </v-toolbar>
     </v-card>
     <v-card class="py-8 px-5 rounded-t-0">
-      <!-- v-if="chartData && !chartLoading" -->
       <Graph
         :typeGraph="typeGraph"
         :chartData="chartData"
         v-if="chartData"
       ></Graph>
-      <!-- <v-container> -->
       <v-img
+        id="firstLoadImg"
+        v-if="chartFirstLoad"
         class="mb-2"
-        lazy-src="../assets/img/ExampleChart.jpg"
-        v-if="chartData==null"
-  
+        src="../assets/img/ExampleChart.jpg"
       ></v-img>
       <v-progress-linear
         indeterminate
@@ -27,7 +25,6 @@
         v-if="chartLoading"
         class="mt-10"
       ></v-progress-linear>
-      <!-- </v-container> -->
     </v-card>
   </v-container>
 </template>
@@ -40,7 +37,7 @@ export default {
   components: {
     Graph,
   },
-  props: ["typeGraph", "chartData", "chartLoading", "chartAltImage"],
+  props: ["typeGraph", "chartData", "chartLoading", "chartFirstLoad"],
   watch: {
     chartData: function (newVal, oldVal) {
       // this.$forceUpdate();

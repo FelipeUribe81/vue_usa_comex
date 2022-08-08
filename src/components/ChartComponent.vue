@@ -57,6 +57,10 @@ export default {
 </script>
 
 <style>
+#firstLoadImg{
+  filter: blur(4px);
+}
+
 #myChartPieOrDonut {
   max-height: 300px;
 }

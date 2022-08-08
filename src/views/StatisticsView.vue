@@ -24,6 +24,7 @@
             :typeGraph="typeGraph"
             :chartData="chartData"
             :chartLoading="chartLoading"
+            :chartFirstLoad="chartFirstLoad"
           ></StatisticsGraph>
         </v-col>
         <v-col
@@ -79,6 +80,7 @@ export default {
       dataParameters: null,
       chartData: null,
       chartLoading: false,
+      chartFirstLoad: true,
     };
   },
   components: {
@@ -122,8 +124,9 @@ export default {
           console.log("Data");
           console.log(res);
           if (res.status == 200) {
-            this.chartLoading = false;
             this.chartData = res.data;
+            this.chartLoading = false;
+            this.chartFirstLoad = false;
           }
         })
         .catch((err) => {
@@ -144,7 +147,10 @@ export default {
           if (res.status == 200) {
             this.xAxis = res.data.eje_x;
             this.yAxis = res.data.eje_y;
-            this.initialChartData({eje_x:res.data.eje_x[0], eje_y:res.data.eje_y[3]})
+            this.initialChartData({
+              eje_x: res.data.eje_x[0],
+              eje_y: res.data.eje_y[3],
+            });
           }
         })
         .catch((err) => {
