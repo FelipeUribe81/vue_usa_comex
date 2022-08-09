@@ -53,6 +53,13 @@
               </v-form>
             </v-col>
           </v-row>
+          <!-- Signup info -->
+          <div id="signup">
+            <p>
+              New to UsaComex?
+              <router-link to="/login">Create an account</router-link>
+            </p>
+          </div>
           <!-- End login box secction-->
         </v-card>
       </v-col>
@@ -166,6 +173,24 @@ export default {
 
 #form a:active {
   color: #035add;
+  font-size: 15px;
+}
+
+#signup {
+  margin-top: 35px;
+  text-align: center;
+  font-size: 14px;
+}
+#signup a {
+  text-decoration: none;
+  color: #fdf21c;
+}
+#signup a:hover {
+  text-decoration: underline;
+  color: #dbd000;
+}
+#signup a:active {
+  color: #8d870d;
   font-size: 15px;
 }
 

@@ -93,13 +93,13 @@
         >
           <v-row justify="center">
             <v-col cols="12" sm="6" md="6" justify="center">
-              <v-btn plain @click="createChartImage">
+              <v-btn plain small block @click="createChartImage">
                 <v-icon dark class="mr-2"> mdi-download </v-icon>
                 Grafico
               </v-btn>
             </v-col>
             <v-col cols="12" sm="6" md="6" justify="center">
-              <v-btn plain>
+              <v-btn plain small block>
                 <v-icon dark class="mr-2"> mdi-download </v-icon>
                 Tabla
               </v-btn>
@@ -131,6 +131,9 @@
 <script>
 import ComboBox from "../components/ComboBoxComponent.vue";
 import html2canvas from "html2canvas";
+// import excel4node from "excel4node";
+// var xl = require('excel4node');
+// xl;
 // const xl = require("excel4node");
 
 export default {
