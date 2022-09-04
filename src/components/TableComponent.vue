@@ -27,7 +27,7 @@
 <script>
 import { Global, serverError, isLogged } from "../Global.js";
 import axios from "axios";
-import InitialDataTable from "./InitialDataTable";
+import {tableDataHeaders} from "./InitialDataTable";
 
 export default {
   name: "TableComponent",
@@ -38,7 +38,7 @@ export default {
       itemsPerPage: 10,
       url: Global.url,
       token: this.$cookies.get("sesion"),
-      tableData: InitialDataTable.tableData,
+      tableData: tableDataHeaders,
       tableRows: 0,
       loadingData: false,
       loadingRows: false,
@@ -117,7 +117,7 @@ export default {
       let dates = JSON.parse(localStorage.date);
       let end_range = newPage * this.itemsPerPage;
       let init_range = end_range - 9;
-      this.tableData = InitialDataTable.tableData;
+      this.tableData = tableDataHeaders;
       console.log();
       this.getTableData({
         fecha_inicio: dates["start"],
