@@ -1,16 +1,17 @@
 <template>
   <v-app-bar class="usa-header" v-if="!$route.meta.hideNavbar" app>
-    <v-img
-      class="mx-2"
-      src="../assets/img/usaLogo.png"
-      max-height="60"
-      max-width="60"
-      contain
-    ></v-img>
-
-    <v-toolbar-title class="white--text"> UsaComex </v-toolbar-title>
+    <router-link to="/choose-date">
+      <v-img class="mx-2" src="../assets/img/usaLogo.png" max-height="60" max-width="60" contain></v-img>
+    </router-link>
+    <v-toolbar-title class="white--text" to="/choose-dates">
+      <router-link to="/choose-date" style="text-decoration:None; color:white;">
+        UsaComex
+      </router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon dark @click="logOut"> <v-icon> mdi-logout</v-icon></v-btn>
+    <v-btn icon dark @click="logOut">
+      <v-icon> mdi-logout</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
