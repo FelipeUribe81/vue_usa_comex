@@ -25,6 +25,7 @@
             :chartData="chartData"
             :chartLoading="chartLoading"
             :chartFirstLoad="chartFirstLoad"
+            :currentAxes="axes"
           ></StatisticsGraph>
         </v-col>
         <v-col
@@ -81,6 +82,7 @@ export default {
       chartData: null,
       chartLoading: false,
       chartFirstLoad: true,
+      axes: null
     };
   },
   components: {
@@ -94,7 +96,6 @@ export default {
   methods: {
     getCurrentGraph(typeGraph) {
       this.typeGraph = typeGraph;
-      console.log(typeGraph);
     },
     initialChartData(axes) {
       let dates = JSON.parse(localStorage.date);
@@ -105,6 +106,7 @@ export default {
           eje_x: axes["eje_x"],
           eje_y: axes["eje_y"],
         };
+        this.axes = axes;
         this.getGraphData(this.dataParameters);
       }
     },

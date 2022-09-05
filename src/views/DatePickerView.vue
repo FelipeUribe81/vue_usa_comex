@@ -14,8 +14,7 @@
         <v-col cols="12" sm="12" md="12" v-if="minDate && maxDate">
           <v-card class="px-4 pt-4">
             <p class="ml-3">
-              Rango de tiempo: Puede consultar cualquier rango de fechas siempre
-              que este disponible.
+              Rango de tiempo: Puede realizar consulta de máximo dos años
             </p>
             <v-row>
               <v-col cols="12" md="6" class="date-picker-input mb-2">
@@ -35,11 +34,12 @@
                 ></DatePicker>
               </v-col>
               <v-col cols="12" class="px-6">
-                <v-alert dense outlined text type="error" v-if="!vaildDate"
-                  >La fecha inicial no puede ser mayor a la final</v-alert
+                <v-alert dense outlined text type="error" v-if="!vaildDate || validRange"
+                  >{{!vaildDate ? "La fecha inicial no puede ser mayor a la final" : validRange ? 
+                  "El limite de búsqueda es de máximo dos años":""}}</v-alert
                 >
               </v-col>
-              <v-col cols="12" align="right" v-if="vaildDate">
+              <v-col cols="12" align="right" v-if="vaildDate && !validRange">
                 <v-btn
                   class="mb-2 mr-3"
                   color="usa-blue"
@@ -84,11 +84,10 @@ export default {
   },
   computed: {
     vaildDate() {
-      if (new Date(this.startDate) > new Date(this.finalDate)) {
-        return false;
-      } else {
-        return true;
-      }
+      return new Date(this.startDate) <= new Date(this.finalDate)
+    },
+    validRange() {
+      return this.monthDiff(new Date(this.finalDate), new Date(this.startDate)) > 24;
     },
   },
   components: {
@@ -98,6 +97,13 @@ export default {
     this.getDatesAvailable();
   },
   methods: {
+    monthDiff(dateFrom, dateTo) {
+      return Math.abs(
+        dateTo.getMonth() -
+        dateFrom.getMonth() +
+        12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+      );
+    },
     getStartDate(date) {
       this.startDate = date;
     },

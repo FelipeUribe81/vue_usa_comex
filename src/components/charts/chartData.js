@@ -6,7 +6,6 @@ export function doughnut_or_pie_data(chartLabels, charData, charType) {
         data: {
             labels: chartLabels,
             datasets: [{
-                label: "# of Tomatoes",
                 data: charData,
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,

@@ -1,15 +1,14 @@
 <template>
   <v-container id="vue-chart-container">
     <!-- GRAPH -->
-    <BarChart v-if="typeGraph == 'bar'" :chartData="chartDataOne"></BarChart>
+    <BarChart v-if="typeGraph == 'bar'" :chartData="chartDataOne" :currentAxes="currentAxes"></BarChart>
     <DonutChart
       v-if="typeGraph == 'donut'"
       :chartData="chartDataOne"
     ></DonutChart>
     <PieChart v-if="typeGraph == 'pie'" :chartData="chartDataOne"></PieChart>
     <!-- <PieChart v-if="typeGraph == 'pie'" :chartData="chartDataOne"></PieChart> -->
-    <LineChart v-if="typeGraph == 'line'" :chartData="chartDataOne"></LineChart>
-    <!-- {{ chartData }} -->
+    <LineChart v-if="typeGraph == 'line'" :chartData="chartDataOne" :currentAxes="currentAxes"></LineChart>
   </v-container>
 </template>
  
@@ -32,7 +31,7 @@ export default {
     PieChart,
     LineChart,
   },
-  props: ["typeGraph", "chartData"],
+  props: ["typeGraph", "chartData", "currentAxes"],
   data() {
     return {
       url: Global.url,

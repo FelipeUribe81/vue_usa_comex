@@ -14,7 +14,7 @@ import { bar_or_line_data } from "./chartData.js";
 var myChart;
 export default {
   name: "BarChart",
-  props: ["chartData"],
+  props: ["chartData", "currentAxes"],
   mounted() {
     var ctx = document.getElementById("myChartBarOrLine").getContext("2d");
     myChart = new Chart(
@@ -23,7 +23,7 @@ export default {
         this.chartData.labels,
         this.chartData.data,
         "bar",
-        "Precio Unitario CIF (COP) Peso Bruto"
+        this.currentAxes["eje_y"]
       )
     );
   },
@@ -36,6 +36,10 @@ export default {
       myChart.data.labels = newVal.labels;
       myChart.update();
       console.log("Prop changed: ", newVal, " | was: ");
+    },
+    currentAxes: function (newVal) {
+      myChart.data.datasets[0].label = newVal["eje_y"];
+      myChart.update();
     },
   },
 };
