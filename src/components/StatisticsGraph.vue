@@ -11,6 +11,7 @@
       <Graph
         :typeGraph="typeGraph"
         :chartData="chartData"
+        :currentAxes="currentAxes"
         v-if="chartData"
       ></Graph>
       <v-img
@@ -37,7 +38,7 @@ export default {
   components: {
     Graph,
   },
-  props: ["typeGraph", "chartData", "chartLoading", "chartFirstLoad"],
+  props: ["typeGraph", "chartData", "chartLoading", "chartFirstLoad", "currentAxes"],
   watch: {
     chartData: function (newVal, oldVal) {
       // this.$forceUpdate();

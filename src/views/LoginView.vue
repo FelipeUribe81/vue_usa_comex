@@ -3,7 +3,10 @@
     <v-row justify="center">
       <v-col>
         <!-- Login box secction -->
-        <v-card id="main-content" class="rounded-lg">
+        <v-card
+          id="main-content"
+          :class="{ 'rounded-lg max-size': alert, 'rounded-lg': !alert }"
+        >
           <!-- Box header -->
           <v-row class="mb-5 mt-2">
             <v-col id="box-header">
@@ -137,6 +140,10 @@ export default {
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 1px 0px 1px rgb(5, 7, 12), 0px 0px 8px black !important;
   color: white;
+}
+
+.max-size {
+  height: 560px !important;
 }
 
 /* input[type="email"]{
