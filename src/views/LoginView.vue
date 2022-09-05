@@ -3,7 +3,10 @@
     <v-row justify="center">
       <v-col>
         <!-- Login box secction -->
-        <v-card id="main-content" class="rounded-lg">
+        <v-card
+          id="main-content"
+          :class="{ 'rounded-lg max-size': alert, 'rounded-lg': !alert }"
+        >
           <!-- Box header -->
           <v-row class="mb-5 mt-2">
             <v-col id="box-header">
@@ -46,6 +49,9 @@
                   dense
                   dark
                 />
+                <v-alert dense outlined text type="error" v-if="alert"
+                  >Usuario o contraseña no validos</v-alert
+                >
                 <v-btn type="submit" color="usa-blue" block dark>Login</v-btn>
               </v-form>
             </v-col>
@@ -81,9 +87,9 @@ export default {
       },
       url: Global.url,
       usaGmail:
-        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@correo([\.])usa([\.])edu([\.])co/,
+        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@correo([\.])usa([\.])edu([\.])co\b/,
       usaOutlook:
-        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@usa([\.])edu([\.])co/,
+        /([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@usa([\.])edu([\.])co\b/,
       rules: {
         required: (value) => !!value || "This field is Required",
         min: (value) => value.length >= 8 || "Min 8 characters",
@@ -92,25 +98,22 @@ export default {
           this.usaOutlook.test(value) ||
           "The email and password you entered don't match",
       },
+      alert: false,
     };
   },
   methods: {
     login() {
-      
-      console.log("Hola");
-      console.log(`${this.url}/users/login/`);
       axios
         .post(`${this.url}/users/login/`, this.user)
         .then((res) => {
-          console.log(res);
           this.$cookies.set("sesion", res.data.token, res.data.expiry);
-          this.$router.push("/statistics");
+          this.$router.push("/choose-date");
         })
         .catch((error) => {
-          console.log(error);
+          this.alert = true;
+          serverError(err.response.status, this.$router);
         });
     },
-    // Después de login siempre se necesitan los headers
   },
 };
 </script>
@@ -137,6 +140,10 @@ export default {
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 1px 0px 1px rgb(5, 7, 12), 0px 0px 8px black !important;
   color: white;
+}
+
+.max-size {
+  height: 560px !important;
 }
 
 /* input[type="email"]{
@@ -181,17 +188,14 @@ export default {
   text-align: center;
   font-size: 14px;
 }
-
 #signup a {
   text-decoration: none;
   color: #fdf21c;
 }
-
 #signup a:hover {
   text-decoration: underline;
   color: #dbd000;
 }
-
 #signup a:active {
   color: #8d870d;
   font-size: 15px;
@@ -209,7 +213,8 @@ export default {
   caret-color: white !important;
 }
 
-#form .theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
+#form
+  .theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
   > .v-input__control
   > .v-input__slot
   fieldset {
@@ -220,7 +225,10 @@ export default {
   border-color: #fdf21c !important;
 }
 
-#form .v-text-field.v-input--has-state > .v-input__control > .v-input__slot:before {
+#form
+  .v-text-field.v-input--has-state
+  > .v-input__control
+  > .v-input__slot:before {
   border-color: #ff5252 !important;
 }
 

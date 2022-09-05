@@ -13,7 +13,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-text-field
           v-model="date"
-          :label="text"
+          :label="label"
           prepend-icon="mdi-calendar"
           v-bind="attrs"
           v-on="on"
@@ -25,8 +25,8 @@
         type="month"
         no-title
         scrollable
-        min="2015-01"
-        max="2016-09"
+        :min="minDate"
+        :max="maxDate"
       >
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
@@ -49,32 +49,16 @@ export default {
   mounted() {
     this.setInitial();
   },
-  //   props: ["text", "value", "getFecha"],
-  props: ["text", "initialDate", "getDate", "validDate"],
-  rules: {
-    // dateValueValid: (value) => !this.validDate || "This field is Required",
-  },
+  props: ["label", "getDate", "minDate", "maxDate"],
   methods: {
     sendDate(date) {
       this.$refs.menu.save(date);
       this.getDate(date);
     },
     setInitial() {
-      this.date = this.initialDate;
-      console.log("Initial");
-      console.log(this.initialDate);
+      this.date = this.minDate;
+      this.sendDate(this.date);
     },
-  },
-  computed: {
-    //   date : this.value,
-    // date: {
-    //   get() {
-    //     return this.value;
-    //   },
-    //   set(value) {
-    //     this.sendDate(value);
-    //   },
-    // },
   },
 };
 </script>

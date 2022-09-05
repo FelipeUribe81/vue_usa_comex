@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import StatisticsView from '../views/StatisticsView.vue'
+import DatePickerView from '../views/DatePickerView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
         name: 'home',
-        component: HomeView
+        component: LoginView,
+        meta: {
+            hideNavbar: true,
+        }
     },
     {
         path: '/about',
@@ -29,10 +34,20 @@ const routes = [{
         }
     },
     {
+        path: '/choose-date',
+        name: 'choose-date',
+        component: DatePickerView,
+    },
+    {
         path: '/statistics',
         name: 'statistics',
         component: StatisticsView
     },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: NotFoundView
+    }
 ]
 
 const router = new VueRouter({

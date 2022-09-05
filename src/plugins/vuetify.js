@@ -18,6 +18,7 @@ export default new Vuetify({
                 info: '#2196F3',
                 success: '#4CAF50',
                 warning: '#FFC107',
+                'usa-ligth-yellow': '#fdf21c',
                 'usa-yellow': '#8d870d',
                 'usa-blue': '#00457C',
                 'usa-header': '#003970',

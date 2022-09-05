@@ -1,118 +1,72 @@
 <template>
   <v-container id="statistics-container" class="px-16" fluid fill-height>
     <div style="width: 100%">
-      <v-row justify="center">
-        <v-col cols="12" sm="10" md="8">
-          <v-card>
-            <v-img id="statistics-banner"> </v-img>
-            <v-card-title> Bienvenido a UsaComex </v-card-title>
-          </v-card>
+      <v-row justify="center" align="center">
+        <v-col
+          cols="12"
+          sm="12"
+          md="4"
+          v-if="
+            $vuetify.breakpoint.name == 'xs' || $vuetify.breakpoint.name == 'sm'
+          "
+        >
+          <!-- Statistics Options -->
+          <StatisticsOptions
+            :xAxis="xAxis"
+            :yAxis="yAxis"
+            :getCurrentAxes="getCurrentAxes"
+            :typeGraph="getCurrentGraph"
+          ></StatisticsOptions>
         </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="12" sm="10" md="8" v-if="startDate && finalDate">
-          <v-card class="px-4 pt-4">
-            <p class="ml-3">
-              Rango de tiempo: Puede seleccionar un rango de tiempo de máximo un
-              año para su consulta.
-            </p>
-            <v-row>
-              <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <!-- <DatePicker
-                  text="Selecciona fecha inicio"
-                  @getDate="getstartDate" v-model="startDate"
-                  :initialDate="`${startDate.year}-${startDate.month}`"
-                ></DatePicker> -->
-                <DatePicker
-                  text="Selecciona fecha inicio"
-                  :getDate="getStartDate"
-                  :initialDate="startDate"
-                ></DatePicker>
-              </v-col>
-              <v-col cols="12" md="6" class="date-picker-input mb-2">
-                <!-- <DatePicker
-                  text="Selecciona fecha final"
-                  @getDate="getFinalDate" v-model="finalDate"
-                  :initialDate="`${finalDate.year}-${finalDate.month}`"
-                ></DatePicker> -->
-                <DatePicker
-                  text="Selecciona fecha final"
-                  :getDate="getFinalDate"
-                  :initialDate="finalDate"
-                ></DatePicker>
-              </v-col>
-              <v-col v-if="alert" cols="12" class="mb-2" id="date-picker-alert">
-                <v-alert
-                  :type="
-                    validateDate(startDate) && validateDate(finalDate)
-                      ? 'success'
-                      : 'error'
-                  "
-                  >La fecha fue escogida con exito</v-alert
-                >
-              </v-col>
-              <v-col cols="12" align="right">
-                <v-btn
-                  class="mb-2 mr-3"
-                  color="usa-blue"
-                  @click="alert = true"
-                  
-                  elevation="0"
-                  dark
-                  >Consultar</v-btn
-                >
-              </v-col>
-            </v-row>
-          </v-card>
+        <v-col cols="12" sm="12" md="8">
+          <!-- Statistics Graph -->
+          <StatisticsGraph
+            :typeGraph="typeGraph"
+            :chartData="chartData"
+            :chartLoading="chartLoading"
+            :chartFirstLoad="chartFirstLoad"
+            :currentAxes="axes"
+          ></StatisticsGraph>
         </v-col>
-        <v-col v-else cols="12" sm="10" md="8" align="center">
-          <v-card class="px-4 pa-4">
-            <v-progress-linear
-              indeterminate
-              color="usa-blue"
-            ></v-progress-linear>
-          </v-card>
+        <v-col
+          cols="12"
+          sm="12"
+          md="4"
+          v-if="
+            $vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'
+          "
+        >
+          <!-- Statistics Options -->
+          <StatisticsOptions
+            :xAxis="xAxis"
+            :yAxis="yAxis"
+            :getCurrentAxes="getCurrentAxes"
+            :typeGraph="getCurrentGraph"
+          ></StatisticsOptions>
         </v-col>
-        <!-- <v-col cols="6">
-          <v-card class="px-4 pt-4">
-            <p>
-              Rango de tiempo: Puede seleccionar un rango de tiempo de máximo un
-              año para su consulta.
-            </p>
-            <v-row>
-              <v-col cols="12" md="6">
-                <DatePicker text="Selecciona fecha inicio"></DatePicker>
-              </v-col>
-              <v-col cols="12" md="6">
-                <DatePicker text="Selecciona fecha inicio"></DatePicker>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col> -->
       </v-row>
       <v-row>
-        <!-- <ComboBox :options01="xAxis" :options02="yAxis" text="Filtrar por:">
-        </ComboBox> -->
+        <v-col cols="12">
+          <v-card class="rounded-b-0">
+            <v-toolbar flat color="usa-blue" dense>
+              <v-toolbar-title class="text-h6 white--text pl-0">
+                Tabla
+              </v-toolbar-title>
+            </v-toolbar>
+          </v-card>
+          <Table></Table>
+        </v-col>
       </v-row>
     </div>
-    <!-- <v-row>
-      <v-col cols="12" md="12" lg="7"
-        ><v-card class="pa-8">Graph</v-card></v-col
-      >
-      <v-col cols="12" md="12" lg="5"
-        ><v-card class="pa-8">Table</v-card></v-col
-      >
-    </v-row> -->
   </v-container>
 </template>
 
 <script>
-// import ComboBox from "../components/ComboBoxComponent.vue";
-import DatePicker from "../components/DatePickerComponent.vue";
+import Table from "../components/TableComponent.vue";
+import StatisticsOptions from "../components/StatisticsOptions.vue";
+import StatisticsGraph from "../components/StatisticsGraph.vue";
 import axios from "axios";
-import { Global } from "../Global";
-
-var datesAvailable = null;
+import { Global, isLogged, serverError } from "../Global.js";
 
 export default {
   data() {
@@ -121,54 +75,64 @@ export default {
       xAxis: [],
       yAxis: [],
       token: this.$cookies.get("sesion"),
-
-      startDate: null,
-      finalDate: null,
-      alert: false,
+      datesAvailable: null,
+      typeGraph: "pie",
+      eChart: false,
+      dataParameters: null,
+      chartData: null,
+      chartLoading: false,
+      chartFirstLoad: true,
+      axes: null
     };
   },
   components: {
-    // ComboBox,
-    DatePicker,
+    Table,
+    StatisticsOptions,
+    StatisticsGraph,
   },
   mounted() {
     this.getAxes();
-    this.getDatesAvailable();
   },
   methods: {
-    getStartDate(date) {
-      this.startDate = date;
-      // this.startDate.year = date.split("-")[0];
-      // this.startDate.month = date.split("-")[1];
-      console.log("Inicio");
-      console.log(this.startDate);
+    getCurrentGraph(typeGraph) {
+      this.typeGraph = typeGraph;
     },
-    getFinalDate(date) {
-      this.finalDate = date;
-      // this.finalDate.year = date.split("-")[0];
-      // this.finalDate.month = date.split("-")[1];
-      console.log("Final");
-      console.log(this.finalDate);
+    initialChartData(axes) {
+      let dates = JSON.parse(localStorage.date);
+      if (axes["eje_x"] != null && axes["eje_y"] != null) {
+        this.dataParameters = {
+          fecha_inicio: dates["start"],
+          fecha_fin: dates["final"],
+          eje_x: axes["eje_x"],
+          eje_y: axes["eje_y"],
+        };
+        this.axes = axes;
+        this.getGraphData(this.dataParameters);
+      }
     },
-    validateDate(date) {
-      console.log("Validation");
-      let dateValid = false;
-      datesAvailable.forEach((item) => {
-        console.log(item);
-        console.log(date);
-        if (item.year == date.split("-")[0]) {
-          if (parseInt(item.month) == parseInt(date.split("-")[1])) {
-            console.log("Pase");
-            dateValid |= true;
+    getCurrentAxes(axes) {
+      this.initialChartData(axes);
+    },
+    getGraphData(dataParameters) {
+      this.chartLoading = true;
+      axios
+        .post(`${this.url}/importacion/data/`, dataParameters, {
+          headers: {
+            Authorization: `Token ${this.token}`,
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            this.chartData = res.data;
+            this.chartLoading = false;
+            this.chartFirstLoad = false;
           }
-        } else {
-          dateValid |= false;
-        }
-      });
-      // console.log(dateValid);
-      return dateValid;
+        })
+        .catch((err) => {
+          isLogged(err.response.status, this.$router);
+          serverError(err.response.status, this.$router);
+        });
     },
-    // Se necesita tener una sola vez
     getAxes() {
       axios
         .get(`${this.url}/importacion/axes/`, {
@@ -177,33 +141,18 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           if (res.status == 200) {
             this.xAxis = res.data.eje_x;
             this.yAxis = res.data.eje_y;
+            this.initialChartData({
+              eje_x: res.data.eje_x[0],
+              eje_y: res.data.eje_y[3],
+            });
           }
-        });
-    },
-    getDatesAvailable() {
-      axios
-        .get(`${this.url}/importacion/years/`, {
-          headers: {
-            Authorization: `Token ${this.token}`,
-          },
         })
-        .then((res) => {
-          console.log(res);
-          if (res.status == 200) {
-            datesAvailable = res.data;
-            // console.log("datesAvailable");
-            // console.log(this.datesAvailable);
-            // this.startDate = res.data[0];
-            this.startDate = `${res.data[0].year}-${res.data[0].month}`;
-            // console.log("Set: "+ this.startDate.year);
-            // this.finalDate = res.data[0];
-            this.finalDate = `${res.data[0].year}-${res.data[0].month}`;
-            // console.log("Set: "+ this.finalDate.year);
-          }
+        .catch((err) => {
+          isLogged(err.response.status, this.$router);
+          serverError(err.response.status, this.$router);
         });
     },
   },
@@ -212,22 +161,21 @@ export default {
 
 <style>
 #statistics-container {
-  /* background: linear-gradient(rgba(5, 7, 12, 0.54), rgba(5, 7, 12, 0.54)),
-    url(../assets/img/background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; */
-
-  /* align-items: initial; */
-
   /* ESTILOS DEL FONDO */
-  background: linear-gradient(to bottom right, #00457d40  , #00447d40),
+  /* background: linear-gradient(to bottom right, #00457d40, #00447d40),
     url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
-  /* background: linear-gradient(to bottom right, #fdf21d71, #00447d71),
-    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png"); */
-  /* display: block !important; */
+} */
+  /* background: linear-gradient(to bottom right, #0061ff40, #60efff70),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+  background: linear-gradient(#145377af, #83d0cb60),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
 }
+/* background: linear-gradient(to bottom right, #4d7d0040, #8d870d40),
+    url("https://www.toptal.com/designers/subtlepatterns/uploads/circles-light.png");
+} */
+/* background-color: aqua;
+} */
 
 /* ESTILOS DE LAS ESTADISTICAS */
 /* ESTILOS DEL BANNER DE BIENVENIDA */
@@ -237,8 +185,6 @@ export default {
     url("../assets/img/background.jpg");
   background-size: cover;
   background-attachment: fixed;
-  /* background-position: 0px -200px; */
-  /* filter: blur(2px); */
 }
 
 /* ESTILOS PARA EL DATE PICKER */
@@ -249,11 +195,4 @@ export default {
 #date-picker-alert {
   height: 80px;
 }
-
-/* .v-text-field--filled>.v-input__control>.v-input__slot, .v-text-field--full-width>.v-input__control>.v-input__slot, .v-text-field--outlined>.v-input__control>.v-input__slot {
-    height: 40px;
-} */
-/* .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
-  border-color: #0252ca !important;
-} */
 </style>

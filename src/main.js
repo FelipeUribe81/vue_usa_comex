@@ -6,9 +6,15 @@ import '@babel/polyfill'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import VueCookies from 'vue-cookies';
+import JsonExcel from "vue-json-excel";
+
+Vue.component("downloadExcel", JsonExcel);
+// import Chart from 'chart.js';
+
 
 Vue.config.productionTip = false
 Vue.use(VueCookies);
+// Vue.use(Chart);
 
 new Vue({
     router,
