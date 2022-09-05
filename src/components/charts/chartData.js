@@ -10,7 +10,7 @@ export function doughnut_or_pie_data(chartLabels, charData, charType) {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 borderWidth: 1,
-            },],
+            }, ],
         },
         options: {
             responsive: true,
@@ -21,7 +21,7 @@ export function doughnut_or_pie_data(chartLabels, charData, charType) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function (context) {
+                        label: function(context) {
                             var label = context.label,
                                 currentValue = context.raw,
                                 total = context.chart._metasets[context.datasetIndex].total;
@@ -48,7 +48,7 @@ export function bar_or_line_data(chartLabels, charData, charType, chartLabel) {
                 backgroundColor: backgroundColor,
                 borderColor: borderColor,
                 borderWidth: 1,
-            },],
+            }, ],
         },
         options: {
             responsive: true,
@@ -58,16 +58,16 @@ export function bar_or_line_data(chartLabels, charData, charType, chartLabel) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function (context) {
-                            var 
+                        label: function(context) {
+                            var
                                 currentValue = context.raw,
                                 total = context.chart.data.datasets[0].data.reduce((accumulator, value) => {
                                     return accumulator + value;
-                                  }, 0);
-                                    
+                                }, 0);
+
                             var percentage = parseFloat((currentValue / total * 100).toFixed(1));
 
-                            return chartLabel + ": " + currentValue + ' (' + percentage + '%)';
+                            return context.dataset.label + ": " + currentValue + ' (' + percentage + '%)';
                         }
                     }
                 },
@@ -76,7 +76,7 @@ export function bar_or_line_data(chartLabels, charData, charType, chartLabel) {
                 x: {
                     ticks: {
                         // For a category axis, the val is the index so the lookup via getLabelForValue is needed
-                        callback: function (val) {
+                        callback: function(val) {
                             // Hide the label of every 2nd dataset
                             return this.getLabelForValue(val).length > 5 ?
                                 String(this.getLabelForValue(val)).substring(0, 10) + "..." :

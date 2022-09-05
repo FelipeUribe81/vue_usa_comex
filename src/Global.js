@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 export var Global = {
-    url: 'http://ec2-3-86-164-109.compute-1.amazonaws.com:8000'
+    url: 'http://ec2-44-202-52-71.compute-1.amazonaws.com:8000'
 };
 
 export function isLogged(statusCode, router) {

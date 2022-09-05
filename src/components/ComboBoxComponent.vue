@@ -45,15 +45,6 @@ export default {
       this.axis({ eje_x: this.eje_x, eje_y: this.eje_y });
     },
   },
-  // watch: {
-  //   options01: function (){
-  //     // console.log("PERR");
-  //     this.sendAxes()
-  //   },
-  //   options02: function (){
-  //     this.sendAxes()
-  //   }
-  // }
 };
 </script>
 

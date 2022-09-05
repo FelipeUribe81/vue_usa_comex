@@ -29,13 +29,9 @@ export default {
   },
   watch: {
     chartData: function (newVal) {
-      console.log("Desde el donut");
-      console.log(myChart);
-      console.log("Dtasets");
       myChart.data.datasets[0].data = newVal.data;
       myChart.data.labels = newVal.labels;
       myChart.update();
-      console.log("Prop changed: ", newVal, " | was: ");
     },
     currentAxes: function (newVal) {
       myChart.data.datasets[0].label = newVal["eje_y"];

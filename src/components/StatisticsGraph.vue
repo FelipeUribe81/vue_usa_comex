@@ -39,11 +39,5 @@ export default {
     Graph,
   },
   props: ["typeGraph", "chartData", "chartLoading", "chartFirstLoad", "currentAxes"],
-  watch: {
-    chartData: function (newVal, oldVal) {
-      // this.$forceUpdate();
-      console.log("Prop changed: ", newVal, " | was: ", oldVal);
-    },
-  },
 };
 </script>

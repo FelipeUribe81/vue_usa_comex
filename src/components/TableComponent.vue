@@ -45,7 +45,6 @@ export default {
     };
   },
   mounted() {
-    console.log("Dta");
     let dates = JSON.parse(localStorage.date);
     this.getTableData({
       fecha_inicio: dates["start"],
@@ -68,7 +67,6 @@ export default {
   },
   watch: {
     page: function (newVal) {
-      console.log(newVal);
       this.tableDataP(newVal);
     },
   },
@@ -85,7 +83,6 @@ export default {
           this.loadingData = false;
           if (res.status == 200) {
             this.tableData = res.data;
-            console.log(this.tableData);
           }
         })
         .catch((err) => {
@@ -118,7 +115,6 @@ export default {
       let end_range = newPage * this.itemsPerPage;
       let init_range = end_range - 9;
       this.tableData = tableDataHeaders;
-      console.log();
       this.getTableData({
         fecha_inicio: dates["start"],
         fecha_fin: dates["final"],

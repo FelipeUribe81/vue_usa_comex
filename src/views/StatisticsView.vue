@@ -114,7 +114,6 @@ export default {
       this.initialChartData(axes);
     },
     getGraphData(dataParameters) {
-      console.log(this.dataParameters);
       this.chartLoading = true;
       axios
         .post(`${this.url}/importacion/data/`, dataParameters, {
@@ -123,8 +122,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("Data");
-          console.log(res);
           if (res.status == 200) {
             this.chartData = res.data;
             this.chartLoading = false;
@@ -144,8 +141,6 @@ export default {
           },
         })
         .then((res) => {
-          console.log("Axes");
-          console.log(res);
           if (res.status == 200) {
             this.xAxis = res.data.eje_x;
             this.yAxis = res.data.eje_y;
